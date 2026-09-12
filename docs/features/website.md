@@ -148,4 +148,4 @@ Nachweis: `tests/e2e/website.spec.ts`, `tests/unit/lib.test.ts`, `npm run lint:s
 - [x] Automatisierte A11y-Prüfung ohne Verstöße auf den Kernseiten (WEB-Q2).
 - [x] Keine Requests an fremde Domains (WEB-Q3).
 - [x] Nutzersichtbare Texte stammen aus `content/` ([ADR-0003](../adr/0003-content-design-separation.md)).
-- [ ] Die Website ist unter `https://barre-balance.at` per HTTPS erreichbar; `www` leitet um. *(offen: Repo öffentlich, Pages, DNS)*
+- [x] Die Website ist unter `https://barre-balance.at` per HTTPS erreichbar; `www` leitet um. *(geprüft 2026-09-12)*
