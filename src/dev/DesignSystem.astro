@@ -1,0 +1,164 @@
+---
+/**
+ * Nur in der Entwicklung unter /ds/ erreichbar (astro.config.mjs).
+ * Übersicht der portierten DS-Komponenten zum visuellen Abgleich mit dem Claude Design System.
+ * Die Beispieltexte hier sind bewusst fest verdrahtet und nicht Teil der Website.
+ */
+import '../styles/global.css';
+import Accordion from '../components/ui/Accordion.astro';
+import AccordionItem from '../components/ui/AccordionItem.astro';
+import Alert from '../components/ui/Alert.astro';
+import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+import Chip from '../components/ui/Chip.astro';
+import Icon from '../components/ui/Icon.astro';
+import Logo from '../components/ui/Logo.astro';
+import Photo from '../components/ui/Photo.astro';
+import Section from '../components/ui/Section.astro';
+import Timeline from '../components/ui/Timeline.astro';
+
+const colors = ['teal', 'teal-dark', 'deep', 'ink', 'grey-50', 'grey-200', 'grey-300', 'grey-700'];
+const icons = [
+  'event',
+  'calendar-month',
+  'schedule',
+  'location-on',
+  'person',
+  'group',
+  'self-improvement',
+  'mail',
+  'call',
+  'chat',
+  'info',
+  'check-circle',
+];
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Design System · Dev</title>
+  </head>
+  <body>
+    <Section
+      overline="Dev"
+      title="Design-System-Port"
+      lead="Komponenten aus src/components/ui im Markenzustand."
+      headingLevel={1}
+    >
+      <div class="row">
+        <Logo brand="Barre & Balance" size={40} />
+        <Logo brand="Barre & Balance" variant="stacked" size={56} />
+        <Logo brand="Barre & Balance" variant="mark" size={48} />
+        <span class="dark">
+          <Logo brand="Barre & Balance" size={34} onDark />
+        </span>
+      </div>
+      <div class="row">
+        {colors.map((c) => (
+          <span class="swatch" style={`background:var(--bb-${c})`}>
+            {c}
+          </span>
+        ))}
+      </div>
+    </Section>
+    <Section tone="white" overline="Core" title="Buttons & Chips">
+      <div class="row">
+        <Button>Contained</Button>
+        <Button variant="outlined">Outlined</Button>
+        <Button variant="text">Text</Button>
+        <Button color="secondary">Secondary</Button>
+        <Button size="small">Small</Button>
+        <Button size="large" icon="mail">
+          Large mit Icon
+        </Button>
+        <Button disabled>Disabled</Button>
+      </div>
+      <div class="row">
+        <Chip>Default</Chip>
+        <Chip tone="outlined">Outlined</Chip>
+        <Chip tone="selected">Selected</Chip>
+        <Chip tone="primary">Primary</Chip>
+        <Chip tone="success" icon="check-circle">
+          2 frei
+        </Chip>
+        <Chip tone="warning" size="small">
+          Platzhalter
+        </Chip>
+        <Chip tone="error" size="small">
+          Error
+        </Chip>
+      </div>
+      <div class="row">
+        {icons.map((name) => (
+          <Icon name={name} />
+        ))}
+        <Icon name="event" filled />
+      </div>
+    </Section>
+    <Section overline="Surfaces" title="Card, Alert, Accordion, Timeline">
+      <div class="bb-grid">
+        <Card overline="Mi · 18:30 · 45 min" title="Kurstitel" href="#">
+          <Photo slot="media" label="Photo-Platzhalter · 3:2" />
+          Kurzbeschreibung in zwei Zeilen.
+          <Button slot="actions" variant="outlined">
+            Mehr erfahren
+          </Button>
+          <Chip slot="aside" tone="warning" size="small">
+            Platzhalter
+          </Chip>
+        </Card>
+        <div class="bb-stack">
+          <Alert severity="info">Info-Hinweis.</Alert>
+          <Alert severity="success" title="Titel">
+            Erfolg.
+          </Alert>
+          <Alert severity="warning">Warnung.</Alert>
+          <Alert severity="error">Fehler.</Alert>
+        </div>
+        <Accordion>
+          <AccordionItem title="Frage eins" name="demo" open>
+            Antwort eins.
+          </AccordionItem>
+          <AccordionItem title="Frage zwei" name="demo">
+            Antwort zwei.
+          </AccordionItem>
+        </Accordion>
+        <Timeline
+          items={[
+            { time: '2015', title: 'Abgeschlossen', state: 'done' },
+            { time: '2026', title: 'Laufend', meta: 'Meta', state: 'ongoing' },
+          ]}
+        />
+      </div>
+    </Section>
+    <style>
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+      .dark {
+        padding: 16px;
+        background: var(--bb-deep);
+      }
+      .swatch {
+        display: inline-flex;
+        align-items: flex-end;
+        width: 110px;
+        height: 72px;
+        padding: 6px;
+        font-family: var(--bb-font-mono);
+        font-size: 10px;
+        color: var(--bb-white);
+        mix-blend-mode: normal;
+        border: var(--bb-border);
+        text-shadow: 0 0 2px var(--bb-ink);
+      }
+    </style>
+  </body>
+</html>

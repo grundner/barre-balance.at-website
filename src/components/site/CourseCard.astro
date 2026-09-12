@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Ui } from '../../lib/content.ts';
+import Button from '../ui/Button.astro';
+import Card from '../ui/Card.astro';
+import Photo from '../ui/Photo.astro';
+import PlaceholderNotice from './PlaceholderNotice.astro';
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+  ui: Ui;
+  headingLevel?: 2 | 3;
+}
+
+const { course, ui, headingLevel = 3 } = Astro.props;
+const { data } = course;
+const href = `/kurse/${course.id}/`;
+const overline = `${data.duration} ${ui.courses.minutes} · ${data.intensity}`;
+---
+
+<Card overline={overline} title={data.title} href={href} headingLevel={headingLevel}>
+  <Photo
+    slot="media"
+    image={data.image}
+    alt={data.imageAlt}
+    label={data.imageLabel}
+    ratio="3/2"
+    sizes="(min-width: 1200px) 380px, (min-width: 600px) 50vw, 100vw"
+  />
+  {data.summary}
+  <Button
+    slot="actions"
+    href={href}
+    variant="outlined"
+    aria-label={`${ui.courses.more}: ${data.title}`}
+  >
+    {ui.courses.more}
+  </Button>
+  {data.placeholder && <PlaceholderNotice slot="aside" ui={ui} variant="chip" />}
+</Card>

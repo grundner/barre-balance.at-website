@@ -1,0 +1,35 @@
+/* Quelle: Claude Design System "Barre & Balance" (76a62150-7990-4b2c-8b92-7961647458ce), tokens/semantic.css
+   Synchronisiert: 2026-09-12. Nicht manuell ändern – Änderungen entstehen im Design System. */
+:root {
+  --bb-surface-page: var(--bb-grey-50);
+  --bb-surface-card: var(--bb-white);
+  --bb-surface-sand: var(--bb-grey-200);
+  --bb-surface-sunken: var(--bb-grey-100);
+  --bb-surface-ink: var(--bb-ink);
+  --bb-surface-deep: var(--bb-deep);
+  --bb-text-primary: var(--bb-ink);
+  --bb-text-secondary: var(--bb-grey-700);
+  --bb-text-muted: var(--bb-grey-600);
+  --bb-text-disabled: var(--bb-grey-500);
+  --bb-text-on-dark: var(--bb-grey-50);
+  --bb-text-link: var(--bb-teal-dark);
+  --bb-text-link-hover: var(--bb-teal);
+  --bb-border-subtle: var(--bb-grey-150);
+  --bb-border-default: var(--bb-grey-300);
+  --bb-border-strong: var(--bb-grey-400);
+  --bb-action-primary: var(--bb-teal);
+  --bb-action-primary-hover: var(--bb-teal-dark);
+  --bb-action-primary-text: var(--bb-white);
+  --bb-action-quiet-hover: var(--bb-teal-a06);
+  --bb-action-disabled-bg: var(--bb-grey-150);
+  --bb-action-disabled-text: var(--bb-grey-500);
+  --bb-marker: var(--bb-teal);
+  --bb-selected-bg: var(--bb-teal-a10);
+}
+a {
+  color: var(--bb-text-link);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--bb-text-link-hover);
+}

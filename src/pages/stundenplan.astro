@@ -1,0 +1,59 @@
+---
+import PageHeader from '../components/site/PageHeader.astro';
+import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
+import ScheduleList from '../components/site/ScheduleList.astro';
+import Alert from '../components/ui/Alert.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getNotices, getPage, getSite, getSlots, getUi } from '../lib/content.ts';
+import { formatDate } from '../lib/dates.ts';
+import { format } from '../lib/text.ts';
+
+const [site, ui, page, slots, notices] = await Promise.all([
+  getSite(),
+  getUi(),
+  getPage('stundenplan'),
+  getSlots(),
+  getNotices(),
+]);
+---
+
+<BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
+  <PageHeader page={page} ui={ui} />
+  <div class="bb-container schedule-page">
+    {notices.length > 0 && (
+      <section class="notices" aria-labelledby="hinweise-titel">
+        <h2 id="hinweise-titel" class="bb-visually-hidden">
+          {ui.schedule.noticesTitle}
+        </h2>
+        {notices.map((notice) => (
+          <Alert
+            severity="info"
+            title={format(ui.schedule.period, {
+              from: formatDate(notice.data.from),
+              to: formatDate(notice.data.to),
+            })}
+          >
+            {notice.data.text}
+            {notice.data.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
+          </Alert>
+        ))}
+      </section>
+    )}
+    <ScheduleList site={site} ui={ui} slots={slots} emptyText={ui.schedule.empty} />
+  </div>
+</BaseLayout>
+
+<style>
+  .schedule-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-5);
+    padding-block: var(--bb-space-4) var(--bb-space-10);
+  }
+
+  .notices {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-15);
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+/** DS: Alert. Zarte Fläche mit 3 px Linie links. */
+import Icon from './Icon.astro';
+
+interface Props {
+  severity?: 'info' | 'success' | 'warning' | 'error';
+  title?: string;
+  class?: string;
+}
+
+const { severity = 'info', title, class: className } = Astro.props;
+const icons = {
+  info: 'info',
+  success: 'check-circle',
+  warning: 'warning',
+  error: 'error',
+} as const;
+---
+
+<div class:list={['alert', `alert--${severity}`, className]}>
+  <Icon name={icons[severity]} size={20} class="alert__icon" />
+  <div class="alert__content">
+    {title && <strong class="alert__title">{title}</strong>}
+    <div class="alert__text">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .alert {
+    --alert-bg: var(--bb-info-bg);
+    --alert-line: var(--bb-info);
+    --alert-title: var(--bb-info);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--alert-bg);
+    border-left: 3px solid var(--alert-line);
+  }
+
+  .alert--success {
+    --alert-bg: var(--bb-success-bg);
+    --alert-line: var(--bb-success);
+    --alert-title: var(--bb-success-ink);
+  }
+
+  .alert--warning {
+    --alert-bg: var(--bb-warning-bg);
+    --alert-line: var(--bb-warning);
+    --alert-title: var(--bb-warning-ink);
+  }
+
+  .alert--error {
+    --alert-bg: var(--bb-error-bg);
+    --alert-line: var(--bb-error);
+    --alert-title: var(--bb-error-ink);
+  }
+
+  .alert__icon {
+    color: var(--alert-line);
+    margin-top: 1px;
+  }
+
+  .alert__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .alert__title {
+    font-size: var(--bb-body2-size);
+    font-weight: var(--bb-weight-medium);
+    color: var(--alert-title);
+  }
+
+  .alert__text {
+    font-size: var(--bb-body2-size);
+    line-height: var(--bb-body2-line);
+    color: var(--bb-grey-800);
+  }
+</style>

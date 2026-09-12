@@ -1,0 +1,23 @@
+---
+/** Sichtbare Markierung von Platzhalter-Inhalten (WEB-R4). */
+import type { Ui } from '../../lib/content.ts';
+import Alert from '../ui/Alert.astro';
+import Chip from '../ui/Chip.astro';
+
+interface Props {
+  ui: Ui;
+  variant?: 'banner' | 'chip';
+}
+
+const { ui, variant = 'banner' } = Astro.props;
+---
+
+{variant === 'chip' ? (
+  <Chip tone="warning" size="small" class="placeholder-chip">
+    {ui.placeholder.badge}
+  </Chip>
+) : (
+  <Alert severity="warning" title={ui.placeholder.badge} class="placeholder-banner">
+    {ui.placeholder.notice}
+  </Alert>
+)}

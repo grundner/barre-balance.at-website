@@ -1,0 +1,94 @@
+---
+/**
+ * DS: Logo. Signet aus Senkrechte, Kreis und Barre; Wortmarke in Jost Light, Versalien,
+ * Ampersand in Teal. Die Wortmarke wird aus dem Markennamen (content/settings/site.yaml) gebildet.
+ */
+interface Props {
+  brand: string;
+  variant?: 'horizontal' | 'stacked' | 'mark';
+  size?: number;
+  onDark?: boolean;
+  class?: string;
+}
+
+const { brand, variant = 'horizontal', size = 40, onDark = false, class: className } = Astro.props;
+const [first = '', second = ''] = brand.split('&').map((part) => part.trim().toUpperCase());
+const thin = size < 40;
+---
+
+<span
+  class:list={['logo', `logo--${variant}`, { 'logo--dark': onDark }, className]}
+  style={`--logo-size:${size}px`}
+  role="img"
+  aria-label={brand}
+>
+  <svg viewBox="0 0 240 240" width={size} height={size} fill="none" aria-hidden="true">
+    <line class="logo__ink" x1="75" y1="25" x2="75" y2="185" stroke-width={thin ? 8 : 5}></line>
+    <circle class="logo__ink" cx="120" cy="140" r="45" stroke-width={thin ? 8 : 5}></circle>
+    <line
+      class="logo__barre"
+      x1="30"
+      y1="140"
+      x2="210"
+      y2="140"
+      stroke-width={thin ? 12 : 8}
+    ></line>
+  </svg>
+  {variant !== 'mark' && (
+    <span class="logo__word" aria-hidden="true">
+      {first} <span class="logo__amp">&amp;</span> {second}
+    </span>
+  )}
+</span>
+
+<style>
+  .logo {
+    --logo-ink: var(--bb-ink);
+    --logo-barre: var(--bb-teal);
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--logo-size) * 0.35);
+    color: var(--logo-ink);
+  }
+
+  .logo--dark {
+    --logo-ink: var(--bb-grey-50);
+    --logo-barre: var(--bb-teal-light);
+  }
+
+  .logo--stacked {
+    flex-direction: column;
+    gap: calc(var(--logo-size) * 0.24);
+  }
+
+  .logo svg {
+    overflow: visible;
+    flex: 0 0 auto;
+  }
+
+  .logo__ink {
+    stroke: var(--logo-ink);
+  }
+
+  .logo__barre {
+    stroke: var(--logo-barre);
+  }
+
+  .logo__word {
+    padding-left: 0.3em;
+    font-family: var(--bb-font-sans);
+    font-weight: var(--bb-weight-regular);
+    font-size: max(11px, calc(var(--logo-size) * 0.33));
+    letter-spacing: 0.3em;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .logo--stacked .logo__word {
+    letter-spacing: var(--bb-wordmark-tracking);
+  }
+
+  .logo__amp {
+    color: var(--logo-barre);
+  }
+</style>

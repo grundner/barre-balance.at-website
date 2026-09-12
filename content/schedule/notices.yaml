@@ -1,0 +1,8 @@
+# Zeitlich begrenzte Hinweise zum Stundenplan, z. B. Pausen · Schema: src/content.config.ts (notices)
+# Beispiel:
+# - id: sommerpause-2027
+#   text: In den Sommerferien finden keine Kurse statt.
+#   from: 2027-07-10
+#   to: 2027-09-05
+
+[]

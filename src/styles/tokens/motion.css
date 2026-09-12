@@ -1,0 +1,34 @@
+/* Quelle: Claude Design System "Barre & Balance" (76a62150-7990-4b2c-8b92-7961647458ce), tokens/motion.css
+   Synchronisiert: 2026-09-12. Nicht manuell ändern – Änderungen entstehen im Design System. */
+:root {
+  --bb-ease: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  --bb-dur-short: 150ms; /* @kind other */
+  --bb-dur-leave: 195ms; /* @kind other */
+  --bb-dur-enter: 225ms; /* @kind other */
+  --bb-dur-long: 320ms; /* @kind other */
+  --bb-transition-hover:
+    background-color var(--bb-dur-short) var(--bb-ease),
+    border-color var(--bb-dur-short) var(--bb-ease), color var(--bb-dur-short) var(--bb-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --bb-dur-short: 0ms; /* @kind other */
+    --bb-dur-leave: 0ms; /* @kind other */
+    --bb-dur-enter: 0ms; /* @kind other */
+    --bb-dur-long: 0ms; /* @kind other */
+  }
+}
+
+@keyframes bb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bb-slide {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}

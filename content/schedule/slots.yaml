@@ -1,0 +1,25 @@
+# Regelmäßige Wochentermine · Schema: src/content.config.ts (schedule)
+# day: mo | di | mi | do | fr | sa | so · time: HH:MM · course/location: Dateiname ohne Endung
+# duration ist optional und überschreibt die Kursdauer.
+# ACHTUNG: Alle Einträge sind Beispiele, bis Isabell den Stundenplan bestätigt.
+
+- id: barre-mi-1830
+  day: mi
+  time: "18:30"
+  course: barre
+  location: st-johann
+  placeholder: true
+
+- id: pilates-do-0900
+  day: do
+  time: "09:00"
+  course: pilates
+  location: fieberbrunn
+  placeholder: true
+
+- id: modern-jazz-fr-1930
+  day: fr
+  time: "19:30"
+  course: modern-jazz
+  location: kitzbuehel
+  placeholder: true

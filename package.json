@@ -1,0 +1,42 @@
+{
+  "name": "barre-balance-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Website von Barre & Balance – barre-balance.at",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "node scripts/serve-dist.mjs 4321",
+    "check": "astro check",
+    "lint:separation": "node scripts/check-separation.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:unit": "node --test \"tests/unit/**/*.test.ts\"",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e",
+    "verify": "npm run format:check && npm run lint:separation && npm run check && npm run test:unit && npm run build && npm run test:e2e"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/jost": "^5.3.0",
+    "@iconify-json/material-symbols-light": "^1.2.92",
+    "@iconify/utils": "^3.1.7",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "sharp": "^0.35.4",
+    "typescript": "^6.0.3"
+  }
+}

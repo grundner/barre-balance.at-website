@@ -1,0 +1,62 @@
+# Website-Einstellungen · Schema: src/content.config.ts (site) · Spezifikation: docs/features/website.md
+
+brand: Barre & Balance
+tagline: Barre, Pilates und Tanz in Kitzbühel, St. Johann und Fieberbrunn. Unterrichtet von Isabell Grundner.
+description: Barre, Pilates und Tanz mit Isabell Grundner in Kitzbühel, St. Johann in Tirol und Fieberbrunn.
+lang: de-AT
+
+# Suchmaschinen-Indexierung. Erst auf true setzen, wenn keine Platzhalter mehr existieren –
+# sonst bricht der Build ab (WEB-R4).
+indexing: false
+
+# Kontaktdaten sind bestätigt (2026-09-12).
+placeholder: false
+
+contact:
+  email: isabell@barre-balance.at
+  phone: '+43 650 4421054'
+  # whatsapp: "436504421054"      # optional, nur Ziffern inkl. Ländervorwahl
+  # instagram: https://www.instagram.com/...   # Adresse folgt
+
+navigation:
+  - label: Stundenplan
+    href: /stundenplan/
+  - label: Kurse
+    href: /kurse/
+  - label: Über Isabell
+    href: /ueber-isabell/
+  - label: Fragen
+    href: /fragen/
+  - label: Blog
+    href: /blog/
+
+headerCta:
+  label: Anfragen
+  href: /kontakt/
+
+footer:
+  columns:
+    - title: Angebot
+      links:
+        - label: Kurse
+          href: /kurse/
+        - label: Stundenplan
+          href: /stundenplan/
+        - label: Fragen
+          href: /fragen/
+    - title: Barre & Balance
+      links:
+        - label: Über Isabell
+          href: /ueber-isabell/
+        - label: Philosophie
+          href: /philosophie/
+        - label: Blog
+          href: /blog/
+        - label: Kontakt
+          href: /kontakt/
+    - title: Rechtliches
+      links:
+        - label: Impressum
+          href: /impressum/
+        - label: Datenschutz
+          href: /datenschutz/

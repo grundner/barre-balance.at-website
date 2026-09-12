@@ -1,0 +1,27 @@
+# Ausbildungsweg von Isabell · Schema: src/content.config.ts (qualifications)
+# Quelle: Profil in docs/product/context.md
+
+- id: jazzdance-2015
+  year: "2015"
+  title: Unterricht Jazzdance
+  state: done
+  order: 1
+
+- id: tanzpaedagogik-2017
+  year: "2017"
+  title: Fortbildung Tanzpädagogik
+  state: done
+  order: 2
+
+- id: barre-2025
+  year: "2025"
+  title: Zertifizierte Barre-Trainerin
+  state: done
+  order: 3
+
+- id: pilates-2026
+  year: "2026"
+  title: Pilates-Trainer-Ausbildung
+  meta: laufend
+  state: ongoing
+  order: 4

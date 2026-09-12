@@ -1,0 +1,43 @@
+/* Quelle: Claude Design System "Barre & Balance" (76a62150-7990-4b2c-8b92-7961647458ce), tokens/colors.css
+   Synchronisiert: 2026-09-12. Nicht manuell ändern – Änderungen entstehen im Design System. */
+:root {
+  --bb-teal: #1b9aaa;
+  --bb-teal-light: #3fc0ce;
+  --bb-teal-dark: #14707c;
+  --bb-deep: #2e4a4f;
+  --bb-deep-light: #4c6a70;
+  --bb-deep-dark: #1c3237;
+  --bb-ink: #14161a;
+  --bb-white: #ffffff;
+  --bb-grey-50: #fafaf8;
+  --bb-grey-100: #f4f3f0;
+  --bb-grey-150: #efede7;
+  --bb-grey-200: #efeae2;
+  --bb-grey-250: #e8e6e1;
+  --bb-grey-300: #e4e2dc;
+  --bb-grey-350: #dfdcd5;
+  --bb-grey-375: #dad7d0;
+  --bb-grey-400: #c9c6be;
+  --bb-grey-500: #a3a29c;
+  --bb-grey-600: #8a8880;
+  --bb-grey-650: #6e6a63;
+  --bb-grey-700: #5a5c60;
+  --bb-grey-750: #4a4a46;
+  --bb-grey-800: #3b3b38;
+  --bb-grey-900: #14161a;
+  --bb-success: #2e7d5b;
+  --bb-success-ink: #1f5a41;
+  --bb-success-bg: rgba(46, 125, 91, 0.12);
+  --bb-info: #14707c;
+  --bb-info-bg: rgba(20, 112, 124, 0.08);
+  --bb-warning: #b26b00;
+  --bb-warning-ink: #8a5300;
+  --bb-warning-bg: rgba(178, 107, 0, 0.12);
+  --bb-error: #b3261e;
+  --bb-error-ink: #8e1f19;
+  --bb-error-bg: rgba(179, 38, 30, 0.08);
+  --bb-teal-a06: rgba(27, 154, 170, 0.06);
+  --bb-teal-a10: rgba(27, 154, 170, 0.1);
+  --bb-teal-a50: rgba(27, 154, 170, 0.5);
+  --bb-scrim: rgba(20, 22, 26, 0.45);
+}

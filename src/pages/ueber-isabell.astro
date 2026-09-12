@@ -1,0 +1,139 @@
+---
+import { render } from 'astro:content';
+import InquiryActions from '../components/site/InquiryActions.astro';
+import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
+import Photo from '../components/ui/Photo.astro';
+import Section from '../components/ui/Section.astro';
+import Timeline from '../components/ui/Timeline.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPage, getQualifications, getSite, getUi } from '../lib/content.ts';
+
+const [site, ui, page, qualifications] = await Promise.all([
+  getSite(),
+  getUi(),
+  getPage('ueber-isabell'),
+  getQualifications(),
+]);
+const { data } = page;
+const { Content } = await render(page);
+
+const qualificationsSection = data.sections.qualifications;
+const inquirySection = data.sections.inquiry;
+if (!qualificationsSection || !inquirySection) {
+  throw new Error(
+    'content/pages/ueber-isabell.md: sections.qualifications und sections.inquiry sind Pflicht',
+  );
+}
+---
+
+<BaseLayout title={data.seoTitle ?? data.title} description={data.description}>
+  <section class="about" aria-labelledby="ueber-titel">
+    <Photo
+      image={data.image}
+      alt={data.imageAlt}
+      label={data.imageLabel}
+      ratio="3/4"
+      priority
+      sizes="(min-width: 900px) 45vw, 100vw"
+      class="about__photo"
+    />
+    <div class="about__text">
+      {data.placeholder && <PlaceholderNotice ui={ui} />}
+      {data.overline && <span class="bb-overline">{data.overline}</span>}
+      <h1 id="ueber-titel" class="bb-h2 about__title">
+        {data.title}
+      </h1>
+      <span class="bb-marker bb-marker--wide"></span>
+      {data.lead && <p class="bb-lead">{data.lead}</p>}
+      <div class="bb-prose">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <Section
+    id="ausbildung"
+    overline={qualificationsSection.overline}
+    title={qualificationsSection.title}
+    lead={qualificationsSection.lead}
+  >
+    <Timeline
+      class="about__timeline"
+      items={qualifications.map((q) => ({
+        time: q.data.year,
+        title: q.data.title,
+        meta: q.data.meta,
+        state: q.data.state,
+      }))}
+    />
+  </Section>
+
+  <Section
+    id="anfrage"
+    tone="sand"
+    overline={inquirySection.overline}
+    title={inquirySection.title}
+    lead={inquirySection.lead}
+  >
+    <InquiryActions site={site} ui={ui} />
+  </Section>
+</BaseLayout>
+
+<style>
+  .about {
+    display: grid;
+    background: var(--bb-white);
+  }
+
+  @media (min-width: 900px) {
+    .about {
+      grid-template-columns: 1fr 1.1fr;
+    }
+  }
+
+  .about :global(.about__photo) {
+    max-height: 70vh;
+  }
+
+  @media (min-width: 900px) {
+    .about :global(.about__photo) {
+      /* Foto füllt die Höhe der Textspalte statt eines festen Seitenverhältnisses. */
+      aspect-ratio: auto !important;
+      max-height: none;
+      min-height: 520px;
+    }
+  }
+
+  .about__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--bb-space-3);
+    padding: var(--bb-space-7) var(--bb-container-pad-xs);
+  }
+
+  @media (min-width: 600px) {
+    .about__text {
+      padding-inline: var(--bb-container-pad-sm);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .about__text {
+      padding: 96px var(--bb-container-pad-md);
+    }
+  }
+
+  .about__title {
+    white-space: pre-line;
+  }
+
+  .about :global(.bb-prose) {
+    max-width: 50ch;
+  }
+
+  :global(.about__timeline) {
+    max-width: 640px;
+  }
+</style>

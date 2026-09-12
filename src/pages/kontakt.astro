@@ -1,0 +1,174 @@
+---
+import { render } from 'astro:content';
+import InquiryActions from '../components/site/InquiryActions.astro';
+import PageHeader from '../components/site/PageHeader.astro';
+import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
+import Icon from '../components/ui/Icon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLocations, getPage, getSite, getUi } from '../lib/content.ts';
+import { telHref } from '../lib/inquiry.ts';
+
+const [site, ui, page, locations] = await Promise.all([
+  getSite(),
+  getUi(),
+  getPage('kontakt'),
+  getLocations(),
+]);
+const { Content } = await render(page);
+const { contact } = site;
+---
+
+<BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
+  <PageHeader page={page} ui={ui}>
+    <InquiryActions site={site} ui={ui} />
+  </PageHeader>
+
+  <div class="bb-container contact">
+    <div class="contact__channels">
+      <div class="bb-prose">
+        <Content />
+      </div>
+      {site.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
+      <dl class="contact__list">
+        <div class="contact__item">
+          <dt>
+            <Icon name="mail" size={22} class="contact__icon" />
+            <span class="bb-visually-hidden">{ui.contact.email}</span>
+          </dt>
+          <dd>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </dd>
+        </div>
+        {contact.phone && (
+          <div class="contact__item">
+            <dt>
+              <Icon name="call" size={22} class="contact__icon" />
+              <span class="bb-visually-hidden">{ui.contact.phone}</span>
+            </dt>
+            <dd>
+              <a href={telHref(contact.phone)}>{contact.phone}</a>
+            </dd>
+          </div>
+        )}
+        {contact.whatsapp && (
+          <div class="contact__item">
+            <dt>
+              <Icon name="chat" size={22} class="contact__icon" />
+              <span class="bb-visually-hidden">{ui.contact.whatsapp}</span>
+            </dt>
+            <dd>
+              <a href={`https://wa.me/${contact.whatsapp}`} rel="noopener noreferrer">
+                {ui.contact.whatsapp}
+              </a>
+            </dd>
+          </div>
+        )}
+        {contact.instagram && (
+          <div class="contact__item">
+            <dt>
+              <Icon name="photo-camera" size={22} class="contact__icon" />
+              <span class="bb-visually-hidden">{ui.contact.instagram}</span>
+            </dt>
+            <dd>
+              <a href={contact.instagram} rel="noopener noreferrer">
+                {ui.contact.instagram}
+              </a>
+            </dd>
+          </div>
+        )}
+      </dl>
+    </div>
+
+    <section class="contact__locations" aria-labelledby="orte-titel">
+      <h2 id="orte-titel" class="bb-h5">
+        {ui.contact.locations}
+      </h2>
+      <ul class="locations">
+        {locations.map((location) => (
+          <li class="location">
+            <Icon name="location-on" size={22} class="contact__icon" />
+            <span class="location__text">
+              <span class="location__name">{location.data.name}</span>
+              {location.data.address && (
+                <span class="location__address">{location.data.address}</span>
+              )}
+              {location.data.note && <span class="location__note">{location.data.note}</span>}
+              {location.data.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact {
+    display: grid;
+    gap: var(--bb-space-6);
+    padding-block: var(--bb-space-5) var(--bb-space-10);
+  }
+
+  @media (min-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--bb-space-5);
+    }
+  }
+
+  .contact__channels,
+  .contact__locations {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bb-space-3);
+  }
+
+  .contact__list,
+  .locations {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .contact__item dd {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  :global(.contact__icon) {
+    color: var(--bb-teal-dark);
+  }
+
+  .location {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .location__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .location__name {
+    font-weight: var(--bb-weight-book);
+  }
+
+  .location__address,
+  .location__note {
+    font-size: var(--bb-body2-size);
+    color: var(--bb-text-secondary);
+  }
+</style>

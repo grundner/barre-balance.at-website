@@ -1,0 +1,33 @@
+---
+import PageHeader from '../components/site/PageHeader.astro';
+import Button from '../components/ui/Button.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPage, getUi } from '../lib/content.ts';
+
+const [ui, page] = await Promise.all([getUi(), getPage('404')]);
+---
+
+<BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
+  <PageHeader page={page} ui={ui}>
+    <div class="not-found__ctas">
+      {page.data.ctas.map((cta, index) => (
+        <Button href={cta.href} variant={index === 0 ? 'contained' : 'outlined'} size="large">
+          {cta.label}
+        </Button>
+      ))}
+    </div>
+  </PageHeader>
+  <div class="not-found__spacer"></div>
+</BaseLayout>
+
+<style>
+  .not-found__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .not-found__spacer {
+    height: var(--bb-space-10);
+  }
+</style>

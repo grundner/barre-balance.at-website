@@ -1,0 +1,149 @@
+---
+/**
+ * DS: Button. Versalien, 0,12 em Laufweite, 2 px Radius, kein Schatten.
+ * Hover ist eine Farbänderung; Fokus ein 2 px Teal-Ring. Mit `href` wird ein Link gerendert.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+
+type Props = {
+  href?: string;
+  variant?: 'contained' | 'outlined' | 'text';
+  color?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
+  icon?: string;
+  endIcon?: string;
+  fullWidth?: boolean;
+  class?: string;
+} & Omit<HTMLAttributes<'a'> & HTMLAttributes<'button'>, 'class'>;
+
+const {
+  href,
+  variant = 'contained',
+  color = 'primary',
+  size = 'medium',
+  icon,
+  endIcon,
+  fullWidth = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+const classes = [
+  'btn',
+  `btn--${variant}`,
+  `btn--${color}`,
+  `btn--${size}`,
+  { 'btn--full': fullWidth },
+  className,
+];
+---
+
+<Tag class:list={classes} href={href} type={href ? undefined : (rest.type ?? 'button')} {...rest}>
+  {icon && <Icon name={icon} size={18} />}
+  <slot />
+  {endIcon && <Icon name={endIcon} size={18} />}
+</Tag>
+
+<style>
+  /*
+   * Abweichung vom DS: Weiß auf Teal (#1B9AAA) erreicht nur 3,36:1 und verfehlt WCAG AA.
+   * Gefüllte Primary-Buttons nutzen daher Teal-dark (5,77:1), Hover dunkelt auf Deep ab.
+   * Siehe .claude/project/design-system.md, „Bekannte Abweichungen“.
+   */
+  .btn {
+    --btn-main: var(--bb-teal-dark);
+    --btn-hover: var(--bb-deep);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: var(--bb-touch);
+    padding: 0 20px;
+    border: none;
+    border-radius: var(--bb-radius);
+    font-family: var(--bb-font-sans);
+    font-size: var(--bb-button-size);
+    font-weight: var(--bb-button-weight);
+    letter-spacing: var(--bb-button-tracking);
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.2;
+    cursor: pointer;
+    box-shadow: none;
+    transition: var(--bb-transition-hover);
+  }
+
+  .btn--secondary {
+    --btn-main: var(--bb-deep);
+    --btn-hover: var(--bb-deep-dark);
+  }
+
+  .btn--small {
+    min-height: 32px;
+    padding: 0 12px;
+    font-size: 0.8125rem;
+  }
+
+  /* Touch-Ziel bleibt auf kleinen Buttons mindestens 44 px hoch. */
+  @media (pointer: coarse) {
+    .btn--small {
+      min-height: var(--bb-touch);
+    }
+  }
+
+  .btn--large {
+    min-height: var(--bb-touch-lg);
+    padding: 0 28px;
+    font-size: 0.9375rem;
+  }
+
+  .btn--full {
+    width: 100%;
+  }
+
+  .btn--contained {
+    background: var(--btn-main);
+    color: var(--bb-action-primary-text);
+  }
+
+  .btn--contained:hover {
+    background: var(--btn-hover);
+    color: var(--bb-action-primary-text);
+  }
+
+  .btn--outlined {
+    background: transparent;
+    color: var(--btn-main);
+    border: 1px solid var(--bb-teal-a50);
+  }
+
+  .btn--outlined.btn--primary {
+    color: var(--bb-teal-dark);
+  }
+
+  .btn--outlined:hover {
+    background: var(--bb-action-quiet-hover);
+    border-color: var(--btn-main);
+  }
+
+  .btn--text {
+    background: transparent;
+    color: var(--bb-teal-dark);
+    padding: 0 8px;
+  }
+
+  .btn--text:hover {
+    background: var(--bb-action-quiet-hover);
+    color: var(--bb-teal-dark);
+  }
+
+  .btn:disabled {
+    background: var(--bb-action-disabled-bg);
+    color: var(--bb-action-disabled-text);
+    border-color: var(--bb-grey-400);
+    cursor: default;
+  }
+</style>

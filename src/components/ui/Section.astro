@@ -1,0 +1,82 @@
+---
+/**
+ * DS (UI-Kit Website): Section. Wechsel zwischen Off-White, Weiß und Sand rhythmisiert die Seite.
+ * Überschriftsblock aus Overline, Titel und Lead.
+ */
+interface Props {
+  id?: string;
+  tone?: 'page' | 'white' | 'sand';
+  width?: 'default' | 'text';
+  overline?: string;
+  title?: string;
+  lead?: string;
+  headingLevel?: 1 | 2;
+  class?: string;
+}
+
+const {
+  id,
+  tone = 'page',
+  width = 'default',
+  overline,
+  title,
+  lead,
+  headingLevel = 2,
+  class: className,
+} = Astro.props;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+const headingId = id && title ? `${id}-titel` : undefined;
+---
+
+<section
+  id={id}
+  class:list={['section', `section--${tone}`, className]}
+  aria-labelledby={headingId}
+>
+  <div class:list={['bb-container', { 'bb-container--text': width === 'text' }, 'section__inner']}>
+    {(overline || title || lead) && (
+      <header class="section__header">
+        {overline && <span class="bb-overline">{overline}</span>}
+        {title && (
+          <Heading id={headingId} class:list={[headingLevel === 1 ? 'bb-h1' : 'bb-h2']}>
+            {title}
+          </Heading>
+        )}
+        {lead && <p class="bb-lead">{lead}</p>}
+      </header>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--bb-space-9);
+  }
+
+  @media (min-width: 900px) {
+    .section {
+      padding-block: 96px;
+    }
+  }
+
+  .section--white {
+    background: var(--bb-white);
+  }
+
+  .section--sand {
+    background: var(--bb-surface-sand);
+  }
+
+  .section__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-5);
+  }
+
+  .section__header {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+</style>

@@ -1,0 +1,77 @@
+# Build, Prüfung und Deploy auf GitHub Pages (ADR-0002).
+# Pull Requests werden nur geprüft; Pushes auf main werden zusätzlich veröffentlicht.
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Formatierung
+        run: npm run format:check
+
+      - name: Trennung Inhalt/Design
+        run: npm run lint:separation
+
+      - name: Typen und Content-Schemas
+        run: npm run check
+
+      - name: Unit-Tests
+        run: npm run test:unit
+
+      - name: Build
+        run: npm run build
+
+      - name: Playwright-Browser installieren
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E- und A11y-Tests
+        run: npm run test:e2e
+
+      - name: Testbericht
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Pages-Artefakt
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://barre-balance.at
+    steps:
+      - uses: actions/deploy-pages@v5

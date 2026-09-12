@@ -1,0 +1,38 @@
+---
+import BlogCard from '../../components/site/BlogCard.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Button from '../../components/ui/Button.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPage, getPosts, getUi } from '../../lib/content.ts';
+
+const [ui, page, posts] = await Promise.all([getUi(), getPage('blog'), getPosts()]);
+---
+
+<BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
+  <PageHeader page={page} ui={ui}>
+    <Button href="/rss.xml" variant="text" icon="rss-feed">
+      {ui.blog.rss}
+    </Button>
+  </PageHeader>
+  <div class="bb-container blog">
+    {posts.length === 0 ? (
+      <p class="blog__empty">{ui.blog.empty}</p>
+    ) : (
+      <div class="bb-grid">
+        {posts.map((post) => (
+          <BlogCard post={post} ui={ui} />
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .blog {
+    padding-block: var(--bb-space-4) var(--bb-space-10);
+  }
+
+  .blog__empty {
+    color: var(--bb-text-secondary);
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+/** Kopf einer Inhaltsseite: Overline, H1, Barre-Akzent, Lead und Platzhalter-Hinweis. */
+import type { CollectionEntry } from 'astro:content';
+import type { Ui } from '../../lib/content.ts';
+import PlaceholderNotice from './PlaceholderNotice.astro';
+
+interface Props {
+  page: CollectionEntry<'pages'>;
+  ui: Ui;
+  width?: 'default' | 'text';
+}
+
+const { page, ui, width = 'default' } = Astro.props;
+const { data } = page;
+---
+
+<div class="page-header">
+  <div
+    class:list={['bb-container', { 'bb-container--text': width === 'text' }, 'page-header__inner']}
+  >
+    {data.placeholder && <PlaceholderNotice ui={ui} />}
+    {data.overline && <span class="bb-overline">{data.overline}</span>}
+    <h1 class="bb-h1">{data.title}</h1>
+    <span class="bb-marker bb-marker--wide"></span>
+    {data.lead && <p class="bb-lead">{data.lead}</p>}
+    <slot />
+  </div>
+</div>
+
+<style>
+  .page-header {
+    padding-block: var(--bb-space-7) var(--bb-space-2);
+  }
+
+  @media (min-width: 900px) {
+    .page-header {
+      padding-block: 96px var(--bb-space-2);
+    }
+  }
+
+  .page-header__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bb-space-3);
+  }
+</style>

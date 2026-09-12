@@ -1,0 +1,85 @@
+# Alle wiederkehrenden Oberflächentexte · Schema: src/content.config.ts (ui)
+# Sprache und Ton: docs/brand/voice-and-tone.md · Platzhalter in {geschweiften Klammern} werden ersetzt.
+
+skipLink: Zum Inhalt springen
+
+menu:
+  label: Hauptnavigation
+  toggle: Menü
+  home: Barre & Balance – zur Startseite
+
+footer:
+  label: Fußzeile
+  copyright: © {year} {brand}
+
+placeholder:
+  badge: Platzhalter
+  notice: Dieser Inhalt ist ein Entwurf und noch nicht bestätigt.
+
+inquiry:
+  email: Per E-Mail anfragen
+  phone: Anrufen
+  whatsapp: Per WhatsApp anfragen
+  subjectGeneral: Anfrage über barre-balance.at
+  subjectCourse: "Anfrage: {course}"
+  bodyGeneral: |
+    Hallo Isabell,
+
+  bodyCourse: |
+    Hallo Isabell,
+
+    ich interessiere mich für {course}{slot}.
+
+  slot: " am {weekday} um {time}"
+
+contact:
+  email: E-Mail
+  phone: Telefon
+  whatsapp: WhatsApp
+  instagram: Instagram
+  locations: Orte
+
+courses:
+  more: Mehr erfahren
+  all: Alle Kurse
+  minutes: min
+  facts:
+    duration: Dauer
+    intensity: Intensität
+    suitableFor: Für wen
+    bring: Mitbringen
+  scheduleTitle: Termine
+  scheduleEmpty: Für diesen Kurs gibt es derzeit keine regelmäßigen Termine.
+  inquiryTitle: Interesse an diesem Kurs?
+
+schedule:
+  inquire: Anfragen
+  empty: Derzeit sind keine Termine eingetragen.
+  noticesTitle: Hinweise
+  period: "{from} bis {to}"
+  weekdays:
+    mo: Montag
+    di: Dienstag
+    mi: Mittwoch
+    do: Donnerstag
+    fr: Freitag
+    sa: Samstag
+    so: Sonntag
+  weekdaysShort:
+    mo: Mo
+    di: Di
+    mi: Mi
+    do: Do
+    fr: Fr
+    sa: Sa
+    so: So
+
+blog:
+  readMore: Weiterlesen
+  updated: aktualisiert am {date}
+  tags: Themen
+  tagTitle: "Thema: {tag}"
+  tagDescription: Alle Beiträge zum Thema {tag}.
+  empty: Noch keine Beiträge.
+  back: Alle Beiträge
+  rss: RSS-Feed

@@ -1,0 +1,86 @@
+---
+import { render } from 'astro:content';
+import PlaceholderNotice from '../../components/site/PlaceholderNotice.astro';
+import TagList from '../../components/site/TagList.astro';
+import Button from '../../components/ui/Button.astro';
+import Photo from '../../components/ui/Photo.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPosts, getUi } from '../../lib/content.ts';
+import { formatDate, isoDate } from '../../lib/dates.ts';
+import { format } from '../../lib/text.ts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const [ui, { Content }] = await Promise.all([getUi(), render(post)]);
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  ogImage={data.image?.src}
+  article={{ published: data.pubDate, modified: data.updatedDate }}
+>
+  <article class="bb-container bb-container--text post">
+    <div>
+      <Button href="/blog/" variant="text" icon="arrow-back">
+        {ui.blog.back}
+      </Button>
+    </div>
+    <header class="post__header">
+      {data.placeholder && <PlaceholderNotice ui={ui} />}
+      <span class="bb-overline">
+        <time datetime={isoDate(data.pubDate)}>{formatDate(data.pubDate)}</time>
+        {data.updatedDate && (
+          <>
+            {' · '}
+            <time datetime={isoDate(data.updatedDate)}>
+              {format(ui.blog.updated, { date: formatDate(data.updatedDate) })}
+            </time>
+          </>
+        )}
+      </span>
+      <h1 class="bb-h2">{data.title}</h1>
+      <span class="bb-marker bb-marker--wide"></span>
+      <p class="bb-lead">{data.description}</p>
+      {data.tags.length > 0 && <TagList tags={data.tags} ui={ui} />}
+    </header>
+    {(data.image || data.imageLabel) && (
+      <Photo
+        image={data.image}
+        alt={data.imageAlt}
+        label={data.imageLabel}
+        ratio="3/2"
+        priority
+        sizes="(min-width: 900px) 900px, 100vw"
+      />
+    )}
+    <div class="bb-prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-5);
+    padding-block: var(--bb-space-4) var(--bb-space-10);
+  }
+
+  .post > div:first-child {
+    margin-left: -8px;
+  }
+
+  .post__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bb-space-2);
+  }
+</style>

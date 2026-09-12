@@ -1,0 +1,8 @@
+# Stimmen von Teilnehmerinnen · Schema: src/content.config.ts (testimonials)
+# Nur mit ausdrücklicher Einwilligung veröffentlichen: consent: true (WEB-R2).
+
+- id: beispiel
+  quote: Beispielstimme ohne Einwilligung. Sie wird nicht angezeigt.
+  attribution: Beispiel
+  consent: false
+  order: 1

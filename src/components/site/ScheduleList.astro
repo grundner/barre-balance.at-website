@@ -1,0 +1,172 @@
+---
+/**
+ * Stundenplan nach Wochentagen (WEB-R5): regelmäßige Termine, keine freien Plätze.
+ * Liste im Stil der DS-Tagesliste: Zeit in Mono, Kurs, Meta, Anfrage-Aktion.
+ */
+import type { Site, Slot, Ui } from '../../lib/content.ts';
+import { inquiryLinks } from '../../lib/inquiry.ts';
+import { groupByWeekday } from '../../lib/schedule.ts';
+import Button from '../ui/Button.astro';
+import PlaceholderNotice from './PlaceholderNotice.astro';
+
+interface Props {
+  site: Site;
+  ui: Ui;
+  slots: Slot[];
+  /** Kursname in der Zeile ausblenden, z. B. auf der Kursdetailseite. */
+  hideCourse?: boolean;
+  headingLevel?: 2 | 3;
+  emptyText: string;
+}
+
+const { site, ui, slots, hideCourse = false, headingLevel = 2, emptyText } = Astro.props;
+const groups = groupByWeekday(slots);
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+{groups.length === 0 ? (
+  <p class="schedule__empty">{emptyText}</p>
+) : (
+  <div class="schedule">
+    {groups.map((group) => (
+      <section class="schedule__day" aria-labelledby={`tag-${group.day}`}>
+        <Heading id={`tag-${group.day}`} class="schedule__weekday">
+          {ui.schedule.weekdays[group.day]}
+        </Heading>
+        <ul class="schedule__list">
+          {group.slots.map((slot) => {
+            const weekday = ui.schedule.weekdays[slot.day];
+            const [email] = inquiryLinks(site.contact, ui.inquiry, {
+              course: slot.course.data.title,
+              weekday,
+              time: slot.time,
+            });
+            return (
+              <li class="schedule__row">
+                <span class="schedule__time">{slot.time}</span>
+                <span class="schedule__info">
+                  {hideCourse ? (
+                    <span class="schedule__course">{slot.location.data.name}</span>
+                  ) : (
+                    <a href={`/kurse/${slot.course.id}/`} class="schedule__course">
+                      {slot.course.data.title}
+                    </a>
+                  )}
+                  <span class="schedule__meta">
+                    {[
+                      `${slot.duration} ${ui.courses.minutes}`,
+                      !hideCourse && slot.location.data.name,
+                      slot.note,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </span>
+                </span>
+                {slot.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
+                {email && (
+                  <Button
+                    href={email.href}
+                    variant="outlined"
+                    data-inquiry="email"
+                    aria-label={`${ui.schedule.inquire}: ${slot.course.data.title}, ${weekday} ${slot.time}`}
+                  >
+                    {ui.schedule.inquire}
+                  </Button>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+)}
+
+<style>
+  .schedule {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-4);
+  }
+
+  .schedule__weekday {
+    margin-bottom: var(--bb-space-15);
+    font-family: var(--bb-font-mono);
+    font-size: var(--bb-caption-size);
+    font-weight: var(--bb-weight-book);
+    letter-spacing: var(--bb-overline-tracking);
+    text-transform: uppercase;
+    color: var(--bb-text-secondary);
+  }
+
+  .schedule__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: var(--bb-border);
+    background: var(--bb-white);
+  }
+
+  .schedule__row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px 20px;
+    padding: 18px 20px;
+  }
+
+  .schedule__row + .schedule__row {
+    border-top: 1px solid var(--bb-border-subtle);
+  }
+
+  .schedule__row :global(.btn) {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 600px) {
+    .schedule__row {
+      grid-template-columns: 64px 1fr auto auto;
+      padding: 20px 24px;
+    }
+
+    .schedule__row :global(.btn) {
+      grid-column: auto;
+    }
+  }
+
+  .schedule__time {
+    font-family: var(--bb-font-mono);
+    font-size: 0.9375rem;
+    align-self: start;
+    padding-top: 3px;
+  }
+
+  .schedule__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .schedule__course {
+    font-size: 1.125rem;
+    font-weight: var(--bb-weight-book);
+    color: var(--bb-text-primary);
+  }
+
+  a.schedule__course:hover {
+    color: var(--bb-teal-dark);
+  }
+
+  .schedule__meta {
+    font-size: var(--bb-body2-size);
+    color: var(--bb-text-secondary);
+  }
+
+  .schedule__empty {
+    padding: var(--bb-space-5);
+    border: var(--bb-border);
+    background: var(--bb-white);
+    text-align: center;
+    color: var(--bb-text-secondary);
+  }
+</style>

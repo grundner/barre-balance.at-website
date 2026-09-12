@@ -1,0 +1,89 @@
+---
+/** DS: Chip. Pille; Töne wie im Design System. */
+import Icon from './Icon.astro';
+
+interface Props {
+  tone?: 'default' | 'outlined' | 'selected' | 'primary' | 'success' | 'warning' | 'error';
+  size?: 'small' | 'medium';
+  icon?: string;
+  href?: string;
+  class?: string;
+}
+
+const { tone = 'default', size = 'medium', icon, href, class: className } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag class:list={['chip', `chip--${tone}`, `chip--${size}`, className]} href={href}>
+  {icon && <Icon name={icon} size={size === 'small' ? 15 : 17} class="chip__icon" />}
+  <slot />
+</Tag>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 14px;
+    border-radius: var(--bb-radius-pill);
+    font-family: var(--bb-font-sans);
+    font-size: 0.8125rem;
+    font-weight: var(--bb-weight-book);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: var(--bb-transition-hover);
+  }
+
+  .chip--small {
+    height: 24px;
+    padding: 0 10px;
+    font-size: var(--bb-caption-size);
+  }
+
+  .chip__icon {
+    opacity: 0.8;
+  }
+
+  .chip--default {
+    background: var(--bb-grey-200);
+    color: var(--bb-ink);
+  }
+
+  .chip--outlined {
+    background: transparent;
+    color: var(--bb-ink);
+    border: 1px solid var(--bb-grey-375);
+  }
+
+  .chip--selected {
+    background: var(--bb-teal);
+    color: var(--bb-white);
+  }
+
+  .chip--primary {
+    background: transparent;
+    color: var(--bb-teal-dark);
+    border: 1px solid var(--bb-teal-a50);
+  }
+
+  .chip--success {
+    background: var(--bb-success-bg);
+    color: var(--bb-success-ink);
+  }
+
+  .chip--warning {
+    background: var(--bb-warning-bg);
+    color: var(--bb-warning-ink);
+  }
+
+  .chip--error {
+    background: var(--bb-error-bg);
+    color: var(--bb-error-ink);
+  }
+
+  a.chip:hover {
+    background: var(--bb-action-quiet-hover);
+    color: var(--bb-teal-dark);
+  }
+</style>

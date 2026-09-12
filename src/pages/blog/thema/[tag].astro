@@ -1,0 +1,39 @@
+---
+import BlogCard from '../../../components/site/BlogCard.astro';
+import Button from '../../../components/ui/Button.astro';
+import Section from '../../../components/ui/Section.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getPosts, getUi } from '../../../lib/content.ts';
+import { format, slugify } from '../../../lib/text.ts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = new Map<string, string>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) tags.set(slugify(tag), tag);
+  }
+  return [...tags].map(([slug, tag]) => ({
+    params: { tag: slug },
+    props: { tag, posts: posts.filter((post) => post.data.tags.includes(tag)) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+const ui = await getUi();
+const title = format(ui.blog.tagTitle, { tag });
+---
+
+<BaseLayout title={title} description={format(ui.blog.tagDescription, { tag })}>
+  <Section title={title} headingLevel={1}>
+    <div>
+      <Button href="/blog/" variant="text" icon="arrow-back">
+        {ui.blog.back}
+      </Button>
+    </div>
+    <div class="bb-grid">
+      {posts.map((post) => (
+        <BlogCard post={post} ui={ui} />
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

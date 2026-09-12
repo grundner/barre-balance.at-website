@@ -1,0 +1,184 @@
+---
+import { render } from 'astro:content';
+import InquiryActions from '../../components/site/InquiryActions.astro';
+import PlaceholderNotice from '../../components/site/PlaceholderNotice.astro';
+import ScheduleList from '../../components/site/ScheduleList.astro';
+import Chip from '../../components/ui/Chip.astro';
+import Photo from '../../components/ui/Photo.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCourses, getSite, getSlots, getUi } from '../../lib/content.ts';
+
+export async function getStaticPaths() {
+  const courses = await getCourses();
+  return courses.map((course) => ({ params: { id: course.id }, props: { course } }));
+}
+
+const { course } = Astro.props;
+const { data } = course;
+const [site, ui, slots, { Content }] = await Promise.all([
+  getSite(),
+  getUi(),
+  getSlots({ courseId: course.id }),
+  render(course),
+]);
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <Photo
+    image={data.image}
+    alt={data.imageAlt}
+    label={data.imageLabel}
+    ratio="16/9"
+    priority
+    sizes="100vw"
+    class="course__photo"
+  />
+
+  <div class="bb-container course">
+    <div class="course__main">
+      <header class="course__header">
+        {data.placeholder && <PlaceholderNotice ui={ui} />}
+        <span class="bb-overline">{data.format}</span>
+        <h1 class="bb-h2">{data.title}</h1>
+        <span class="bb-marker"></span>
+      </header>
+
+      <ul class="course__chips">
+        <li>
+          <Chip icon="schedule">{`${data.duration} ${ui.courses.minutes}`}</Chip>
+        </li>
+        <li>
+          <Chip icon="signal-cellular-alt">{data.intensity}</Chip>
+        </li>
+      </ul>
+
+      <div class="bb-prose">
+        <Content />
+      </div>
+
+      <dl class="course__facts">
+        <div>
+          <dt class="bb-overline">{ui.courses.facts.suitableFor}</dt>
+          <dd>{data.suitableFor}</dd>
+        </div>
+        {data.bring.length > 0 && (
+          <div>
+            <dt class="bb-overline">{ui.courses.facts.bring}</dt>
+            <dd>
+              <ul class="course__bring">
+                {data.bring.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        )}
+      </dl>
+
+      <section class="course__schedule" aria-labelledby="termine-titel">
+        <h2 id="termine-titel" class="bb-h4">
+          {ui.courses.scheduleTitle}
+        </h2>
+        <ScheduleList
+          site={site}
+          ui={ui}
+          slots={slots}
+          hideCourse
+          headingLevel={3}
+          emptyText={ui.courses.scheduleEmpty}
+        />
+      </section>
+    </div>
+
+    <aside class="course__aside" aria-labelledby="anfrage-titel">
+      <div class="course__inquiry">
+        <h2 id="anfrage-titel" class="bb-h5">
+          {ui.courses.inquiryTitle}
+        </h2>
+        <InquiryActions site={site} ui={ui} context={{ course: data.title }} stacked />
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  :global(.course__photo) {
+    max-height: 420px;
+  }
+
+  .course {
+    display: grid;
+    gap: var(--bb-space-6);
+    padding-block: var(--bb-space-6) var(--bb-space-10);
+  }
+
+  @media (min-width: 900px) {
+    .course {
+      grid-template-columns: 1.5fr 1fr;
+      gap: var(--bb-space-7);
+      align-items: start;
+    }
+  }
+
+  .course__main {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    min-width: 0;
+  }
+
+  .course__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .course__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .course__facts {
+    display: grid;
+    gap: var(--bb-space-3);
+    margin: 0;
+    padding-top: var(--bb-space-3);
+    border-top: var(--bb-border);
+  }
+
+  .course__facts dd {
+    margin: 6px 0 0;
+  }
+
+  .course__bring {
+    margin: 0;
+    padding-left: 1.25em;
+  }
+
+  .course__schedule {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-3);
+    padding-top: var(--bb-space-3);
+    border-top: var(--bb-border);
+  }
+
+  .course__aside {
+    position: sticky;
+    top: 92px;
+  }
+
+  .course__inquiry {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 28px;
+    border: var(--bb-border);
+    background: var(--bb-white);
+  }
+</style>

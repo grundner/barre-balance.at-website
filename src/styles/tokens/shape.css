@@ -1,0 +1,22 @@
+/* Quelle: Claude Design System "Barre & Balance" (76a62150-7990-4b2c-8b92-7961647458ce), tokens/shape.css
+   Synchronisiert: 2026-09-12. Nicht manuell ändern – Änderungen entstehen im Design System. */
+:root {
+  --bb-radius-0: 0px;
+  --bb-radius: 2px;
+  --bb-radius-menu: 4px;
+  --bb-radius-pill: 999px;
+  --bb-border: 1px solid var(--bb-grey-300);
+  --bb-focus-ring: 2px solid var(--bb-teal);
+  --bb-focus-offset: 2px;
+  --bb-elev-0: none;
+  --bb-elev-1: 0 1px 2px rgba(20, 22, 26, 0.06), 0 1px 3px rgba(20, 22, 26, 0.04);
+  --bb-elev-2: 0 2px 6px rgba(20, 22, 26, 0.07), 0 1px 2px rgba(20, 22, 26, 0.05);
+  --bb-elev-3: 0 8px 24px rgba(20, 22, 26, 0.1), 0 2px 6px rgba(20, 22, 26, 0.05);
+  --bb-elev-8: 0 18px 48px rgba(20, 22, 26, 0.14), 0 4px 10px rgba(20, 22, 26, 0.06);
+  --bb-elev-16: 0 18px 48px rgba(20, 22, 26, 0.2);
+  --bb-z-appbar: 1100; /* @kind other */
+  --bb-z-drawer: 1200; /* @kind other */
+  --bb-z-modal: 1300; /* @kind other */
+  --bb-z-snackbar: 1400; /* @kind other */
+  --bb-z-tooltip: 1500; /* @kind other */
+}

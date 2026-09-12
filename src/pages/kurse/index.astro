@@ -1,0 +1,25 @@
+---
+import CourseCard from '../../components/site/CourseCard.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCourses, getPage, getUi } from '../../lib/content.ts';
+
+const [ui, page, courses] = await Promise.all([getUi(), getPage('kurse'), getCourses()]);
+---
+
+<BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
+  <PageHeader page={page} ui={ui} />
+  <div class="bb-container courses">
+    <div class="bb-grid">
+      {courses.map((course) => (
+        <CourseCard course={course} ui={ui} headingLevel={2} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .courses {
+    padding-block: var(--bb-space-4) var(--bb-space-10);
+  }
+</style>

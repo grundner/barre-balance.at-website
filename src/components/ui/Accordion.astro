@@ -1,0 +1,23 @@
+---
+/**
+ * DS: Accordion. Container für AccordionItem; nativ über <details>, ohne JavaScript (WEB-Q4).
+ * Mit `name` ist jeweils nur ein Eintrag geöffnet.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['accordion', className]}>
+  <slot />
+</div>
+
+<style>
+  .accordion {
+    border: var(--bb-border);
+    border-radius: var(--bb-radius);
+    background: var(--bb-white);
+  }
+</style>

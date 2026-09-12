@@ -1,0 +1,38 @@
+---
+import type { Post, Ui } from '../../lib/content.ts';
+import { formatDate } from '../../lib/dates.ts';
+import Card from '../ui/Card.astro';
+import Photo from '../ui/Photo.astro';
+import PlaceholderNotice from './PlaceholderNotice.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: Post;
+  ui: Ui;
+  headingLevel?: 2 | 3;
+}
+
+const { post, ui, headingLevel = 2 } = Astro.props;
+const { data } = post;
+---
+
+<Card
+  overline={formatDate(data.pubDate)}
+  title={data.title}
+  href={`/blog/${post.id}/`}
+  headingLevel={headingLevel}
+>
+  {(data.image || data.imageLabel) && (
+    <Photo
+      slot="media"
+      image={data.image}
+      alt={data.imageAlt}
+      label={data.imageLabel}
+      ratio="3/2"
+      sizes="(min-width: 1200px) 380px, (min-width: 600px) 50vw, 100vw"
+    />
+  )}
+  {data.description}
+  {data.tags.length > 0 && <TagList slot="actions" tags={data.tags} ui={ui} />}
+  {data.placeholder && <PlaceholderNotice slot="aside" ui={ui} variant="chip" />}
+</Card>

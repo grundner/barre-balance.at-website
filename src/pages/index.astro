@@ -1,0 +1,206 @@
+---
+import BlogCard from '../components/site/BlogCard.astro';
+import CourseCard from '../components/site/CourseCard.astro';
+import InquiryActions from '../components/site/InquiryActions.astro';
+import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
+import Testimonials from '../components/site/Testimonials.astro';
+import Button from '../components/ui/Button.astro';
+import Photo from '../components/ui/Photo.astro';
+import Section from '../components/ui/Section.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCourses, getPage, getPosts, getSite, getTestimonials, getUi } from '../lib/content.ts';
+
+const [site, ui, page, courses, testimonials, posts] = await Promise.all([
+  getSite(),
+  getUi(),
+  getPage('home'),
+  getCourses(),
+  getTestimonials(),
+  getPosts(),
+]);
+const { data } = page;
+
+function section(key: string) {
+  const value = data.sections[key];
+  if (!value) throw new Error(`content/pages/home.md: sections.${key} fehlt`);
+  return value;
+}
+
+const coursesSection = section('courses');
+const philosophySection = section('philosophy');
+const testimonialsSection = section('testimonials');
+const blogSection = section('blog');
+const inquirySection = section('inquiry');
+---
+
+<BaseLayout title={data.seoTitle ?? data.title} description={data.description} isHome>
+  <section class="hero" aria-labelledby="hero-titel">
+    <div class="hero__text">
+      {data.placeholder && <PlaceholderNotice ui={ui} />}
+      {data.overline && <span class="bb-overline">{data.overline}</span>}
+      <h1 id="hero-titel" class="bb-h1 hero__title">
+        {data.title}
+      </h1>
+      <span class="bb-marker bb-marker--wide"></span>
+      {data.lead && <p class="bb-lead">{data.lead}</p>}
+      {data.ctas.length > 0 && (
+        <div class="hero__ctas">
+          {data.ctas.map((cta, index) => (
+            <Button href={cta.href} size="large" variant={index === 0 ? 'contained' : 'outlined'}>
+              {cta.label}
+            </Button>
+          ))}
+        </div>
+      )}
+    </div>
+    <Photo
+      image={data.image}
+      alt={data.imageAlt}
+      label={data.imageLabel}
+      ratio="3/4"
+      priority
+      sizes="(min-width: 900px) 50vw, 100vw"
+      class="hero__photo"
+    />
+  </section>
+
+  <Section
+    id="kurse"
+    overline={coursesSection.overline}
+    title={coursesSection.title}
+    lead={coursesSection.lead}
+  >
+    <div class="bb-grid">
+      {courses.slice(0, 3).map((course) => (
+        <CourseCard course={course} ui={ui} />
+      ))}
+    </div>
+    {coursesSection.cta && (
+      <div>
+        <Button href={coursesSection.cta.href} variant="outlined" endIcon="arrow-forward">
+          {coursesSection.cta.label}
+        </Button>
+      </div>
+    )}
+  </Section>
+
+  <Section
+    id="philosophie"
+    tone="sand"
+    overline={philosophySection.overline}
+    title={philosophySection.title}
+    lead={philosophySection.lead}
+  >
+    {philosophySection.cta && (
+      <div>
+        <Button href={philosophySection.cta.href} variant="outlined" endIcon="arrow-forward">
+          {philosophySection.cta.label}
+        </Button>
+      </div>
+    )}
+  </Section>
+
+  {testimonials.length > 0 && (
+    <Section
+      id="stimmen"
+      tone="white"
+      overline={testimonialsSection.overline}
+      title={testimonialsSection.title}
+      lead={testimonialsSection.lead}
+    >
+      <Testimonials testimonials={testimonials} />
+    </Section>
+  )}
+
+  {posts.length > 0 && (
+    <Section
+      id="blog"
+      overline={blogSection.overline}
+      title={blogSection.title}
+      lead={blogSection.lead}
+    >
+      <div class="bb-grid">
+        {posts.slice(0, 3).map((post) => (
+          <BlogCard post={post} ui={ui} headingLevel={3} />
+        ))}
+      </div>
+      {blogSection.cta && (
+        <div>
+          <Button href={blogSection.cta.href} variant="outlined" endIcon="arrow-forward">
+            {blogSection.cta.label}
+          </Button>
+        </div>
+      )}
+    </Section>
+  )}
+
+  <Section
+    id="anfrage"
+    tone="sand"
+    overline={inquirySection.overline}
+    title={inquirySection.title}
+    lead={inquirySection.lead}
+  >
+    <InquiryActions site={site} ui={ui} />
+  </Section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    background: var(--bb-white);
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: 1.05fr 1fr;
+      align-items: stretch;
+    }
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--bb-space-3);
+    padding: var(--bb-space-7) var(--bb-container-pad-xs);
+  }
+
+  @media (min-width: 600px) {
+    .hero__text {
+      padding-inline: var(--bb-container-pad-sm);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .hero__text {
+      gap: 30px;
+      padding: 104px var(--bb-container-pad-md);
+    }
+  }
+
+  .hero__title {
+    white-space: pre-line;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: var(--bb-space-1);
+  }
+
+  .hero :global(.hero__photo) {
+    max-height: 70vh;
+  }
+
+  @media (min-width: 900px) {
+    .hero :global(.hero__photo) {
+      /* Foto füllt die Höhe der Textspalte statt eines festen Seitenverhältnisses. */
+      aspect-ratio: auto !important;
+      max-height: none;
+      min-height: 560px;
+    }
+  }
+</style>

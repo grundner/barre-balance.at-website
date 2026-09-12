@@ -1,0 +1,33 @@
+---
+import type { Ui } from '../../lib/content.ts';
+import { slugify } from '../../lib/text.ts';
+import Chip from '../ui/Chip.astro';
+
+interface Props {
+  tags: string[];
+  ui: Ui;
+}
+
+const { tags, ui } = Astro.props;
+---
+
+<ul class="tags" aria-label={ui.blog.tags}>
+  {tags.map((tag) => (
+    <li>
+      <Chip tone="outlined" size="small" href={`/blog/thema/${slugify(tag)}/`}>
+        {tag}
+      </Chip>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

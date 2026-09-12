@@ -1,0 +1,34 @@
+---
+import { render } from 'astro:content';
+import PageHeader from '../components/site/PageHeader.astro';
+import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
+import Accordion from '../components/ui/Accordion.astro';
+import AccordionItem from '../components/ui/AccordionItem.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getFaq, getPage, getUi } from '../lib/content.ts';
+
+const [ui, page, faq] = await Promise.all([getUi(), getPage('fragen'), getFaq()]);
+const items = await Promise.all(
+  faq.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
+---
+
+<BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
+  <PageHeader page={page} ui={ui} width="text" />
+  <div class="bb-container bb-container--text faq">
+    <Accordion>
+      {items.map(({ entry, Content }) => (
+        <AccordionItem title={entry.data.question} name="fragen" id={entry.id}>
+          {entry.data.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
+          <Content />
+        </AccordionItem>
+      ))}
+    </Accordion>
+  </div>
+</BaseLayout>
+
+<style>
+  .faq {
+    padding-block: var(--bb-space-4) var(--bb-space-10);
+  }
+</style>

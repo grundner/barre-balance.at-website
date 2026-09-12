@@ -1,0 +1,47 @@
+---
+/** Anfrage über Kontakt-Links statt Buchung (WEB-R1). */
+import type { Site, Ui } from '../../lib/content.ts';
+import { inquiryLinks, type InquiryContext, type InquiryKind } from '../../lib/inquiry.ts';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  site: Site;
+  ui: Ui;
+  context?: InquiryContext;
+  size?: 'medium' | 'large';
+  stacked?: boolean;
+}
+
+const { site, ui, context, size = 'large', stacked = false } = Astro.props;
+const links = inquiryLinks(site.contact, ui.inquiry, context);
+const icons: Record<InquiryKind, string> = { email: 'mail', phone: 'call', whatsapp: 'chat' };
+---
+
+<div class:list={['inquiry', { 'inquiry--stacked': stacked }]}>
+  {links.map((link, index) => (
+    <Button
+      href={link.href}
+      variant={index === 0 ? 'contained' : 'outlined'}
+      size={size}
+      icon={icons[link.kind]}
+      fullWidth={stacked}
+      data-inquiry={link.kind}
+      rel={link.kind === 'whatsapp' ? 'noopener noreferrer' : undefined}
+    >
+      {link.label}
+    </Button>
+  ))}
+</div>
+
+<style>
+  .inquiry {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .inquiry--stacked {
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>

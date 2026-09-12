@@ -1,0 +1,60 @@
+---
+/** Stimmen (nur mit Einwilligung, WEB-R2 – gefiltert in getTestimonials). */
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  testimonials: CollectionEntry<'testimonials'>[];
+}
+
+const { testimonials } = Astro.props;
+---
+
+<ul class="testimonials">
+  {testimonials.map((t) => (
+    <li class="testimonial">
+      <figure>
+        <blockquote class="testimonial__quote">
+          <p>{t.data.quote}</p>
+        </blockquote>
+        <figcaption class="testimonial__by">{t.data.attribution}</figcaption>
+      </figure>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .testimonials {
+    display: grid;
+    gap: var(--bb-gutter);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .testimonial {
+    padding: 28px 30px;
+    border: var(--bb-border);
+    background: var(--bb-white);
+  }
+
+  .testimonial figure {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .testimonial__quote {
+    font-size: 1rem;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .testimonial__by {
+    font-family: var(--bb-font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bb-text-secondary);
+  }
+</style>

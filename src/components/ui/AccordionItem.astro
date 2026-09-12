@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  name?: string;
+  open?: boolean;
+  id?: string;
+}
+
+const { title, name, open = false, id } = Astro.props;
+---
+
+<details class="accordion-item" name={name} open={open} id={id}>
+  <summary class="accordion-item__summary">
+    <span>{title}</span>
+    <Icon name="expand-more" size={22} class="accordion-item__icon" />
+  </summary>
+  <div class="accordion-item__content">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .accordion-item + .accordion-item {
+    border-top: 1px solid var(--bb-border-subtle);
+  }
+
+  .accordion-item[open] {
+    background: var(--bb-grey-50);
+  }
+
+  .accordion-item__summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    min-height: var(--bb-touch);
+    padding: 18px 22px;
+    font-size: 1rem;
+    font-weight: var(--bb-weight-book);
+    color: var(--bb-text-primary);
+    cursor: pointer;
+    list-style: none;
+    transition: var(--bb-transition-hover);
+  }
+
+  .accordion-item__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion-item__summary:hover {
+    background: var(--bb-action-quiet-hover);
+  }
+
+  .accordion-item__summary:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .accordion-item__icon {
+    color: var(--bb-text-secondary);
+    transition: transform var(--bb-dur-enter) var(--bb-ease);
+  }
+
+  .accordion-item[open] .accordion-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion-item__content {
+    padding: 0 22px 20px;
+    font-size: var(--bb-body2-size);
+    line-height: 1.65;
+    color: var(--bb-text-secondary);
+  }
+
+  .accordion-item__content :global(p + p) {
+    margin-top: var(--bb-space-1);
+  }
+</style>

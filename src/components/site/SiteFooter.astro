@@ -1,0 +1,125 @@
+---
+/** DS (UI-Kit Website): SiteFooter. Fläche Deep, Logo auf dunkel. */
+import type { Site, Ui } from '../../lib/content.ts';
+import { format } from '../../lib/text.ts';
+import Logo from '../ui/Logo.astro';
+
+interface Props {
+  site: Site;
+  ui: Ui;
+}
+
+const { site, ui } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="bb-container footer__grid">
+    <div class="footer__brand">
+      <Logo brand={site.brand} size={34} onDark />
+      <p class="footer__tagline">{site.tagline}</p>
+    </div>
+
+    <nav class="footer__nav" aria-label={ui.footer.label}>
+      {site.footer.columns.map((column) => (
+        <div class="footer__column">
+          <h2 class="footer__title">{column.title}</h2>
+          <ul class="footer__links">
+            {column.links.map((item) => (
+              <li>
+                <a href={item.href} class="footer__link">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+  <div class="bb-container">
+    <p class="footer__copyright">{format(ui.footer.copyright, { year, brand: site.brand })}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--bb-space-7) 44px;
+    background: var(--bb-surface-deep);
+    color: var(--bb-grey-250);
+  }
+
+  .footer__grid {
+    display: grid;
+    gap: var(--bb-space-5);
+  }
+
+  @media (min-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 1.4fr 3fr;
+    }
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .footer__tagline {
+    max-width: 34ch;
+    font-size: var(--bb-body2-size);
+    line-height: 1.7;
+  }
+
+  .footer__nav {
+    display: grid;
+    gap: var(--bb-space-4);
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer__title {
+    font-family: var(--bb-font-mono);
+    font-size: var(--bb-overline-size);
+    font-weight: var(--bb-weight-book);
+    letter-spacing: var(--bb-overline-tracking);
+    text-transform: uppercase;
+    color: var(--bb-grey-400);
+  }
+
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    font-size: var(--bb-body2-size);
+    color: var(--bb-grey-250);
+  }
+
+  .footer__link:hover {
+    color: var(--bb-teal-light);
+  }
+
+  .footer__copyright {
+    margin-top: var(--bb-space-6);
+    padding-top: var(--bb-space-3);
+    border-top: 1px solid var(--bb-deep-light);
+    font-family: var(--bb-font-mono);
+    font-size: var(--bb-caption-size);
+    color: var(--bb-grey-400);
+  }
+</style>
