@@ -3,7 +3,7 @@ title: Barre
 summary: Kräftigung und Haltung an der Stange. Kurzbeschreibung folgt.
 format: Barre
 intensity: Level offen
-duration: 45
+duration: 60
 suitableFor: Wird mit Isabell abgestimmt.
 bring: []
 order: 1

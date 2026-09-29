@@ -24,6 +24,10 @@ Administration (siehe [Betreiberbereich](../ux/information-architecture.md#3-bet
 Die Qualifikationen dienen auf der Website als Vertrauenssignal, nicht als
 klassischer Lebenslauf (siehe [Über Isabell](../ux/information-architecture.md#über-isabell)).
 
+## Kurse
+
+- Alle Kurse und Formate dauern **60 Minuten** (bestätigt 2026-09-29).
+
 ## Region
 
 Regionale Ausrichtung zunächst auf Tirol, insbesondere den Raum

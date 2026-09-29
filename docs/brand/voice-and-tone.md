@@ -25,7 +25,7 @@ spricht.
 
 - Sätze in normaler Schreibweise.
 - Versalien nur für Buttons, Overlines und die Wortmarke; diese Versalien entstehen gestalterisch, der Inhalt wird normal geschrieben.
-- Trenner ist der Mittelpunkt: `45 min · Level 2 · St. Johann`.
+- Trenner ist der Mittelpunkt: `60 min · Level 2 · St. Johann`.
 
 ## Wortwahl
 
