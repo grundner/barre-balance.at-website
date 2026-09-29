@@ -8,6 +8,7 @@ suitableFor: Wird mit Isabell abgestimmt.
 bring: []
 order: 2
 image: ../images/matte-ausfallschritt-studio-tageslicht.jpg
+imageFocus: 50% 28%
 imageAlt: Zwei Frauen im Ausfallschritt auf Matten in einem lichtdurchfluteten Studio.
 placeholder: true
 ---

@@ -79,6 +79,10 @@ verfolgt.
 Alle Inhalte liegen in `content/` und werden beim Build gegen ein Schema
 validiert. Ungültige Inhalte brechen den Build.
 
+Ein **Bild** besteht aus Datei, Alternativtext (Pflicht, sobald eine Datei
+gesetzt ist) und optionalem **Bildfokus**: dem Punkt, der beim Zuschneiden auf
+das Format der jeweiligen Darstellung sichtbar bleibt (Standard: Bildmitte).
+
 | Typ | Beschreibung | Wesentliche Felder |
 |---|---|---|
 | Website-Einstellungen | Marke, Kontaktkanäle, Navigation, Social-Links, Indexierung | Markenname, E-Mail, Telefon, WhatsApp (optional), Instagram (optional), Navigation, Footer-Links, `indexing` |

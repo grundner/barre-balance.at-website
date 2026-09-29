@@ -32,6 +32,11 @@ const imageFields = (image: SchemaContext['image']) => ({
   imageAlt: z.string().min(1).optional(),
   /** Beschriftung des Bildplatzhalters, solange kein Foto vorliegt. */
   imageLabel: z.string().min(1).optional(),
+  /** Bildfokus beim Zuschneiden als CSS-Position „x% y%“, z. B. „50% 25%“ (Standard: Mitte). */
+  imageFocus: z
+    .string()
+    .regex(/^(100|\d{1,2})% (100|\d{1,2})%$/, 'Bildfokus im Format „x% y%“, z. B. „50% 25%“')
+    .optional(),
 });
 
 const hasAltText = (data: { image?: unknown; imageAlt?: string }) =>

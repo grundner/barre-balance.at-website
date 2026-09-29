@@ -120,6 +120,12 @@ test.describe('Regeln', () => {
     await expect(hero.locator('img.hero__photo')).toHaveAttribute('alt', /.+/);
   });
 
+  test('Bildfokus bestimmt den Bildausschnitt', async ({ page }) => {
+    await page.goto('/kurse/');
+    const pilates = page.locator('.card', { has: page.locator('a[href="/kurse/pilates/"]') });
+    await expect(pilates.locator('img')).toHaveCSS('object-position', '50% 28%');
+  });
+
   test('WEB-R2: Stimmen ohne Einwilligung erscheinen nicht', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByText('Beispielstimme ohne Einwilligung')).toHaveCount(0);
