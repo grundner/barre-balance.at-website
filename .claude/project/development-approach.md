@@ -22,3 +22,11 @@ and the ADRs in [`docs/adr/`](../../docs/adr/README.md).
 - Project documentation and website content are written in German; working
   instructions under `.claude/` are written in English.
 - The repository is public (ADR-0002): keep confidential information out.
+
+## Git workflow
+
+- Work happens on feature branches named `feature/<topic>` (short, kebab-case,
+  English), branched from `main`.
+- One topic per branch: a new topic starts a new branch.
+- Changes reach `main` via pull request; pushing to `main` deploys the site
+  (see [build-and-test.md](build-and-test.md)).

@@ -24,6 +24,7 @@ umgesetzt werden.
 | **Hypothese**  | Arbeitsannahme, die validiert werden muss.                               |
 | **Kandidat**   | Mögliche Funktion oder Idee. Nicht zur Umsetzung freigegeben.            |
 | **Offen**      | Bewusst nicht entschieden. Siehe [Offene Fragen](open-questions.md).     |
+| **Zurückgestellt** | Akzeptiert und bereits gestaltet, aber bewusst nicht veröffentlicht. Reaktivierung nur auf ausdrückliche Entscheidung. |
 
 Ohne explizite Kennzeichnung gilt der im Dokumentkopf angegebene Status.
 

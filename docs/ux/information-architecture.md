@@ -64,7 +64,9 @@ Jeder Kurs erhält eine eigene Detaildarstellung mit:
 
 ### Stundenplan
 
-**Sehr wichtiger Bereich** (**Akzeptiert**).
+**Zurückgestellt** (2026-09-29): derzeit nicht veröffentlicht, das Design wird
+für später bereitgehalten (siehe [Website](../features/website.md#zurückgestellt-stundenplan)).
+Bei Reaktivierung gilt: **sehr wichtiger Bereich**.
 
 Der Stundenplan soll visuell hochwertig, extrem einfach und insbesondere mobil
 hervorragend funktionieren.

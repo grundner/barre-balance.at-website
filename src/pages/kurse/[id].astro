@@ -2,11 +2,10 @@
 import { render } from 'astro:content';
 import InquiryActions from '../../components/site/InquiryActions.astro';
 import PlaceholderNotice from '../../components/site/PlaceholderNotice.astro';
-import ScheduleList from '../../components/site/ScheduleList.astro';
 import Chip from '../../components/ui/Chip.astro';
 import Photo from '../../components/ui/Photo.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCourses, getSite, getSlots, getUi } from '../../lib/content.ts';
+import { getCourses, getSite, getUi } from '../../lib/content.ts';
 
 export async function getStaticPaths() {
   const courses = await getCourses();
@@ -15,12 +14,7 @@ export async function getStaticPaths() {
 
 const { course } = Astro.props;
 const { data } = course;
-const [site, ui, slots, { Content }] = await Promise.all([
-  getSite(),
-  getUi(),
-  getSlots({ courseId: course.id }),
-  render(course),
-]);
+const [site, ui, { Content }] = await Promise.all([getSite(), getUi(), render(course)]);
 ---
 
 <BaseLayout title={data.title} description={data.summary}>
@@ -74,20 +68,6 @@ const [site, ui, slots, { Content }] = await Promise.all([
           </div>
         )}
       </dl>
-
-      <section class="course__schedule" aria-labelledby="termine-titel">
-        <h2 id="termine-titel" class="bb-h4">
-          {ui.courses.scheduleTitle}
-        </h2>
-        <ScheduleList
-          site={site}
-          ui={ui}
-          slots={slots}
-          hideCourse
-          headingLevel={3}
-          emptyText={ui.courses.scheduleEmpty}
-        />
-      </section>
     </div>
 
     <aside class="course__aside" aria-labelledby="anfrage-titel">
@@ -158,14 +138,6 @@ const [site, ui, slots, { Content }] = await Promise.all([
   .course__bring {
     margin: 0;
     padding-left: 1.25em;
-  }
-
-  .course__schedule {
-    display: flex;
-    flex-direction: column;
-    gap: var(--bb-space-3);
-    padding-top: var(--bb-space-3);
-    border-top: var(--bb-border);
   }
 
   .course__aside {

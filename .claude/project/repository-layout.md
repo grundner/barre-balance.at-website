@@ -39,6 +39,11 @@ tests/e2e/                    Playwright tests against dist/
 
 - Routes are code (`src/pages`), their texts are content (`content/pages/<id>.md`).
   Adding a page means: spec in `docs/features/website.md`, content file, route, test entry in `tests/e2e/website.spec.ts`.
+- Deferred features stay in the code but are not built: a route is parked by an
+  underscore prefix (`src/pages/_<name>.astro`, excluded by Astro), unused
+  compositions stay in `src/components/site/`. Currently parked: the schedule
+  (`_stundenplan.astro`, `CourseSchedule.astro`), see `docs/features/website.md`.
+  Reactivating requires an explicit decision; update the spec, navigation and tests.
 - Pure helpers in `src/lib` import siblings with explicit `.ts` extensions so
   they run under the Node test runner without a build step.
 - Comments and documentation facing the project are German; code identifiers are English.

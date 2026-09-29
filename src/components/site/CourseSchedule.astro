@@ -1,0 +1,38 @@
+---
+/**
+ * Termine eines Kurses laut Stundenplan (WEB-R6).
+ * Zurückgestellt: derzeit nicht eingebunden, siehe docs/features/website.md.
+ * Einbinden in src/pages/kurse/[id].astro unterhalb von .course__facts:
+ *   <CourseSchedule site={site} ui={ui} slots={await getSlots({ courseId: course.id })} />
+ */
+import type { ComponentProps } from 'astro/types';
+import ScheduleList from './ScheduleList.astro';
+
+type Props = Pick<ComponentProps<typeof ScheduleList>, 'site' | 'ui' | 'slots'>;
+
+const { site, ui, slots } = Astro.props;
+---
+
+<section class="course__schedule" aria-labelledby="termine-titel">
+  <h2 id="termine-titel" class="bb-h4">
+    {ui.courses.scheduleTitle}
+  </h2>
+  <ScheduleList
+    site={site}
+    ui={ui}
+    slots={slots}
+    hideCourse
+    headingLevel={3}
+    emptyText={ui.courses.scheduleEmpty}
+  />
+</section>
+
+<style>
+  .course__schedule {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-3);
+    padding-top: var(--bb-space-3);
+    border-top: var(--bb-border);
+  }
+</style>

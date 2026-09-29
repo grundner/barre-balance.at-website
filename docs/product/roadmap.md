@@ -31,7 +31,7 @@ Status: **Akzeptiert**, in Umsetzung
 
 - Marke etablieren
 - Kurse präsentieren
-- Stundenplan (ohne freie Plätze)
+- Stundenplan (ohne freie Plätze) – **zurückgestellt** (2026-09-29), siehe [Website](../features/website.md#zurückgestellt-stundenplan)
 - Kontakt und Anfrage über Kontakt-Links statt Buchung
 - Testimonials
 - Blog
@@ -166,7 +166,7 @@ Der erste Release ist die **statische Website** gemäß
 - hochwertige öffentliche Website
 - Isabell / Brand
 - Kurse und Kursdetails
-- Stundenplan
+- ~~Stundenplan~~ – zurückgestellt (2026-09-29), siehe [Website](../features/website.md#zurückgestellt-stundenplan)
 - Anfrage über Kontakt-Links
 - Blog
 

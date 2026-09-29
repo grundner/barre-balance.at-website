@@ -9,8 +9,7 @@ Technische Entscheidungen: [ADR-0001](../adr/0001-static-website-astro.md),
 ## Ziel
 
 Eine hochwertige, statische Website für **Barre & Balance** unter
-`https://barre-balance.at`. Sie stellt Isabell, ihre Kurse, den Stundenplan und
-ihre Haltung vor. Außerdem ermöglicht sie eine unkomplizierte **Anfrage** über
+`https://barre-balance.at`. Sie stellt Isabell, ihre Kurse und ihre Haltung vor. Außerdem ermöglicht sie eine unkomplizierte **Anfrage** über
 Kontakt-Links. Die Website verkauft Isabell und das Erlebnis ihrer Kurse – nicht
 Software (siehe [Designprinzipien](../ux/design-principles.md)).
 
@@ -35,8 +34,8 @@ Nicht Teil dieses Scopes:
 |---|---|---|---|
 | WEB-P1 | Home | `/` | Hero, Kursauswahl, Philosophie-Teaser, Stimmen, Blog-Teaser, Anfrage-CTA |
 | WEB-P2 | Kurse | `/kurse/` | Übersicht aller veröffentlichten Kurse |
-| WEB-P3 | Kursdetail | `/kurse/<kurs>/` | Beschreibung, Eckdaten, Termine laut Stundenplan, Anfrage-CTA |
-| WEB-P4 | Stundenplan | `/stundenplan/` | Wöchentlicher Stundenplan nach Wochentagen, Hinweise |
+| WEB-P3 | Kursdetail | `/kurse/<kurs>/` | Beschreibung, Eckdaten, Anfrage-CTA |
+| WEB-P4 | Stundenplan | `/stundenplan/` | **Zurückgestellt**, siehe [Zurückgestellt: Stundenplan](#zurückgestellt-stundenplan) |
 | WEB-P5 | Über Isabell | `/ueber-isabell/` | Storytelling, Qualifikationen als Vertrauenssignal |
 | WEB-P6 | Philosophie | `/philosophie/` | Was Movement für Isabell bedeutet |
 | WEB-P7 | Fragen | `/fragen/` | FAQ |
@@ -65,8 +64,8 @@ validiert. Ungültige Inhalte brechen den Build.
 | Seite | Redaktioneller Text einer Seite | Titel, Beschreibung (SEO), Overline, Lead, Fließtext, `placeholder` |
 | Kurs | Ein Kursformat (siehe [Glossar](../glossary.md)) | Titel, Kurzbeschreibung, Format, Intensität, Dauer, für wen geeignet, Mitbringen, Reihenfolge, Bild, `placeholder` |
 | Ort | Unterrichtsort | Name, Adresse, Hinweis |
-| Stundenplan-Eintrag | Regelmäßiger wöchentlicher Termin | Wochentag, Uhrzeit, Dauer, Kurs, Ort, Hinweis |
-| Hinweis | Zeitlich begrenzte Information zum Stundenplan (z. B. Pause) | Text, von, bis |
+| Stundenplan-Eintrag | Regelmäßiger wöchentlicher Termin (zurückgestellt, wird gepflegt, aber nicht angezeigt) | Wochentag, Uhrzeit, Dauer, Kurs, Ort, Hinweis |
+| Hinweis | Zeitlich begrenzte Information zum Stundenplan (z. B. Pause; zurückgestellt) | Text, von, bis |
 | Frage (FAQ) | Frage und Antwort | Frage, Antwort, Reihenfolge |
 | Stimme (Testimonial) | Persönliche Stimme einer Teilnehmerin | Zitat, Zuordnung, `consent` |
 | Blog-Beitrag | Artikel | Titel, Beschreibung, Veröffentlichungsdatum, Aktualisierungsdatum, Bild, Tags, `draft` |
@@ -108,15 +107,36 @@ sichtbar.
 
 ### WEB-R5 – Stundenplan ohne Echtzeitdaten
 
+Status: **Zurückgestellt** (gilt, sobald der Stundenplan reaktiviert wird)
+
 Der Stundenplan zeigt regelmäßige Wochentermine und manuell gepflegte Hinweise
 mit explizitem Zeitraum. Freie Plätze, Ausbuchung und Wartelisten werden nicht
 angezeigt.
 
 ### WEB-R6 – Kurs und Termine
 
+Status: **Zurückgestellt** (gilt, sobald der Stundenplan reaktiviert wird)
+
 Die Kursdetailseite listet alle Stundenplan-Einträge des Kurses. Ein Kurs ohne
 Stundenplan-Eintrag bleibt sichtbar; statt Terminen erscheint der Leerzustand
 aus den UI-Texten.
+
+---
+
+## Zurückgestellt: Stundenplan
+
+Status: **Zurückgestellt** (2026-09-29, Entscheidung Stephan Grundner)
+
+Der Stundenplan (WEB-P4, WEB-R5, WEB-R6) wird derzeit nicht benötigt und ist
+nicht veröffentlicht: keine Seite `/stundenplan/`, kein Navigations-, Footer-
+oder Inhaltslink, keine Termine auf der Kursdetailseite. Anfragen beziehen sich
+auf den Kurs (WEB-R1).
+
+Das Design gefällt und wird für später bereitgehalten. Gestaltung, Umsetzung,
+Inhaltsschema und Inhalte (Stundenplan-Einträge, Hinweise) bleiben erhalten,
+damit der Stundenplan ohne Neugestaltung reaktiviert werden kann. Eine
+Reaktivierung erfordert eine ausdrückliche Entscheidung; die Beispieltermine
+müssen dann von Isabell bestätigt werden.
 
 ---
 
@@ -139,7 +159,8 @@ aus den UI-Texten.
 Nachweis: `tests/e2e/website.spec.ts`, `tests/unit/lib.test.ts`, `npm run lint:separation`
 (siehe [`.claude/project/build-and-test.md`](../../.claude/project/build-and-test.md)).
 
-- [x] Alle Seitentypen WEB-P1 bis WEB-P14 werden gebaut und sind erreichbar.
+- [x] Alle Seitentypen WEB-P1 bis WEB-P14 außer dem zurückgestellten WEB-P4 werden gebaut und sind erreichbar.
+- [x] Der zurückgestellte Stundenplan ist weder erreichbar noch verlinkt; Kursdetailseiten zeigen keine Termine.
 - [x] Ein ungültiger Content-Eintrag (z. B. fehlender Pflichttitel) lässt den Build fehlschlagen. *(manuell geprüft)*
 - [x] Anfrage-CTAs erzeugen korrekte `mailto:`-, `tel:`- und (falls konfiguriert) WhatsApp-Links mit Kursbezug (WEB-R1).
 - [x] Stimmen ohne `consent: true` erscheinen nicht (WEB-R2).

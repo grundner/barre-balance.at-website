@@ -19,8 +19,6 @@ contact:
   # instagram: https://www.instagram.com/...   # Adresse folgt
 
 navigation:
-  - label: Stundenplan
-    href: /stundenplan/
   - label: Kurse
     href: /kurse/
   - label: Über Isabell
@@ -40,8 +38,6 @@ footer:
       links:
         - label: Kurse
           href: /kurse/
-        - label: Stundenplan
-          href: /stundenplan/
         - label: Fragen
           href: /fragen/
     - title: Barre & Balance

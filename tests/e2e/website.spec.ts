@@ -9,7 +9,6 @@ const PAGES = [
   '/',
   '/kurse/',
   '/kurse/barre/',
-  '/stundenplan/',
   '/ueber-isabell/',
   '/philosophie/',
   '/fragen/',
@@ -97,21 +96,21 @@ test('alle internen Links führen zu existierenden Seiten', async ({ page, reque
 });
 
 test.describe('Regeln', () => {
-  test('WEB-R1: Anfrage-Links enthalten Kurs, Wochentag und Uhrzeit', async ({ page }) => {
-    await page.goto('/stundenplan/');
-    const href = await page.locator('a[data-inquiry="email"]').first().getAttribute('href');
+  test('WEB-R1: Anfrage-Links enthalten den Kurs', async ({ page }) => {
+    await page.goto('/kurse/barre/');
+    const href = await page
+      .locator('.course__inquiry a[data-inquiry="email"]')
+      .getAttribute('href');
     expect(href).toMatch(/^mailto:[^?]+@barre-balance\.at\?/);
     const params = new URLSearchParams(href!.split('?')[1]);
     expect(params.get('subject')).toBe('Anfrage: Barre');
-    expect(params.get('body')).toContain('ich interessiere mich für Barre am Mittwoch um 18:30.');
+    expect(params.get('body')).toContain('ich interessiere mich für Barre.');
+  });
 
-    await page.goto('/kurse/barre/');
-    const courseHref = await page
-      .locator('.course__inquiry a[data-inquiry="email"]')
-      .getAttribute('href');
-    expect(new URLSearchParams(courseHref!.split('?')[1]).get('body')).toContain(
-      'ich interessiere mich für Barre.',
-    );
+  test('Stundenplan ist zurückgestellt (WEB-P4)', async ({ page, request }) => {
+    expect((await request.get('/stundenplan/')).status()).toBe(404);
+    await page.goto('/');
+    await expect(page.locator('a[href="/stundenplan/"]')).toHaveCount(0);
   });
 
   test('WEB-R2: Stimmen ohne Einwilligung erscheinen nicht', async ({ page }) => {
