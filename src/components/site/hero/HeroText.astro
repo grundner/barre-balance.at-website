@@ -1,0 +1,99 @@
+---
+/** Textblock des Startseiten-Heros, gemeinsam für alle Varianten. */
+import type { Page, Ui } from '../../../lib/content.ts';
+import Button from '../../ui/Button.astro';
+import PlaceholderNotice from '../PlaceholderNotice.astro';
+
+interface Props {
+  page: Page;
+  ui: Ui;
+  /** Helle Schrift auf dunklem Grund (Variante „vollflaechig“). */
+  onDark?: boolean;
+}
+
+const { page, ui, onDark = false } = Astro.props;
+const { data } = page;
+---
+
+<div class:list={['hero-text', { 'hero-text--on-dark': onDark }]}>
+  {data.placeholder && <PlaceholderNotice ui={ui} />}
+  {data.overline && <span class="bb-overline hero-text__overline">{data.overline}</span>}
+  <h1 id="hero-titel" class="bb-h1 hero-text__title">
+    {data.title}
+  </h1>
+  <span class="bb-marker bb-marker--wide hero-text__marker"></span>
+  {data.lead && <p class="bb-lead hero-text__lead">{data.lead}</p>}
+  {data.ctas.length > 0 && (
+    <div class="hero-text__ctas">
+      {data.ctas.map((cta, index) => (
+        <Button
+          href={cta.href}
+          size="large"
+          variant={index === 0 ? 'contained' : 'outlined'}
+          class={onDark && index > 0 ? 'hero-text__cta--on-dark' : undefined}
+        >
+          {cta.label}
+        </Button>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bb-space-3);
+  }
+
+  @media (min-width: 1200px) {
+    .hero-text {
+      gap: 26px;
+    }
+  }
+
+  .hero-text__title {
+    white-space: pre-line;
+  }
+
+  .hero-text__lead {
+    max-width: 44ch;
+  }
+
+  .hero-text__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: var(--bb-space-1);
+  }
+
+  .hero-text--on-dark {
+    color: var(--bb-white);
+  }
+
+  .hero-text--on-dark .hero-text__overline,
+  .hero-text--on-dark .hero-text__lead {
+    color: var(--bb-white);
+  }
+
+  /* Platzhalter-Hinweis bleibt auf dem Foto deckend und lesbar. */
+  .hero-text--on-dark :global(.placeholder-banner) {
+    color: var(--bb-text-primary);
+    background: linear-gradient(var(--bb-warning-bg), var(--bb-warning-bg)), var(--bb-white);
+  }
+
+  .hero-text--on-dark .hero-text__marker {
+    background: var(--bb-teal-light);
+  }
+
+  .hero-text :global(.hero-text__cta--on-dark) {
+    color: var(--bb-white);
+    border-color: color-mix(in srgb, var(--bb-white) 60%, transparent);
+  }
+
+  .hero-text :global(.hero-text__cta--on-dark:hover) {
+    background: color-mix(in srgb, var(--bb-white) 12%, transparent);
+    border-color: var(--bb-white);
+  }
+</style>

@@ -36,6 +36,12 @@ Eintrag unter „Entschieden“ mit Verweis vermerkt.
 | OQ-16 | Reichweitenmessung: keine, oder cookielose Lösung (z. B. Cloudflare Web Analytics)? | [Website](features/website.md) |
 | OQ-17 | Mehrsprachigkeit: nur Deutsch, oder später auch Englisch (Tourismusregion)? | [Website](features/website.md) |
 
+## Design
+
+| ID | Frage | Betrifft |
+|---|---|---|
+| OQ-18 | Hero der Startseite: Variante „Vollflächig“ (2a) oder „Editorial“ (2b)? | [Website](features/website.md#hero-der-startseite) |
+
 ## Entschieden
 
 | ID | Frage | Entscheidung |

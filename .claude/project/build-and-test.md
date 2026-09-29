@@ -5,7 +5,7 @@ Requirements: Node.js 24 (`.nvmrc`), npm. Playwright needs Chromium once:
 
 | Command | Purpose |
 |---|---|
-| `npm run dev` | Development server on http://localhost:4321 (drafts visible, `/ds/` design-system overview) |
+| `npm run dev` | Development server on http://localhost:4321 (drafts visible, `/ds/` design-system overview, `/ds/hero/<variant>/` hero comparison) |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve `dist/` like GitHub Pages on http://localhost:4321 |
 | `npm run check` | TypeScript and content schema check (`astro check`) |

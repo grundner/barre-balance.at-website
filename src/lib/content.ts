@@ -17,6 +17,7 @@ export const getPage = (id: string) => required('pages', id);
 
 export type Site = Awaited<ReturnType<typeof getSite>>;
 export type Ui = Awaited<ReturnType<typeof getUi>>;
+export type Page = Awaited<ReturnType<typeof getPage>>;
 
 export async function getCourses() {
   const courses = await getCollection('courses');

@@ -4,7 +4,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 /**
- * Registers the design-system overview page (/ds/) in development only.
+ * Registers the design-system overview page (/ds/) and the hero preview
+ * (/ds/hero/<variant>/) in development only.
  * It is never part of the production build.
  * @returns {import('astro').AstroIntegration}
  */
@@ -15,6 +16,7 @@ function devDesignSystemPage() {
       'astro:config:setup': ({ command, injectRoute }) => {
         if (command === 'dev') {
           injectRoute({ pattern: '/ds', entrypoint: './src/dev/DesignSystem.astro' });
+          injectRoute({ pattern: '/ds/hero/[variant]', entrypoint: './src/dev/HeroPreview.astro' });
         }
       },
     },
