@@ -5,7 +5,7 @@
  */
 import Hero from '../components/site/hero/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getPage, getUi } from '../lib/content.ts';
+import { getPage } from '../lib/content.ts';
 import { HERO_VARIANTS, type HeroVariant } from '../lib/hero.ts';
 
 export function getStaticPaths() {
@@ -13,9 +13,9 @@ export function getStaticPaths() {
 }
 
 const variant = Astro.params.variant as HeroVariant;
-const [ui, page] = await Promise.all([getUi(), getPage('home')]);
+const page = await getPage('home');
 ---
 
 <BaseLayout title={`Hero ${variant}`} description="Dev-Vorschau">
-  <Hero page={page} ui={ui} variant={variant} />
+  <Hero page={page} variant={variant} />
 </BaseLayout>

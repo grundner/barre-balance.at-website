@@ -84,7 +84,6 @@ const ui = defineCollection({
     skipLink: z.string(),
     menu: z.object({ label: z.string(), toggle: z.string(), home: z.string() }),
     footer: z.object({ label: z.string(), copyright: z.string() }),
-    placeholder: z.object({ badge: z.string(), notice: z.string() }),
     inquiry: z.object({
       email: z.string(),
       phone: z.string(),

@@ -3,7 +3,6 @@ import type { Post, Ui } from '../../lib/content.ts';
 import { formatDate } from '../../lib/dates.ts';
 import Card from '../ui/Card.astro';
 import Photo from '../ui/Photo.astro';
-import PlaceholderNotice from './PlaceholderNotice.astro';
 import TagList from './TagList.astro';
 
 interface Props {
@@ -34,5 +33,4 @@ const { data } = post;
   )}
   {data.description}
   {data.tags.length > 0 && <TagList slot="actions" tags={data.tags} ui={ui} />}
-  {data.placeholder && <PlaceholderNotice slot="aside" ui={ui} variant="chip" />}
 </Card>

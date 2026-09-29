@@ -1,7 +1,6 @@
 ---
 import { render } from 'astro:content';
 import InquiryActions from '../components/site/InquiryActions.astro';
-import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
 import Photo from '../components/ui/Photo.astro';
 import Section from '../components/ui/Section.astro';
 import Timeline from '../components/ui/Timeline.astro';
@@ -38,7 +37,6 @@ if (!qualificationsSection || !inquirySection) {
       class="about__photo"
     />
     <div class="about__text">
-      {data.placeholder && <PlaceholderNotice ui={ui} />}
       {data.overline && <span class="bb-overline">{data.overline}</span>}
       <h1 id="ueber-titel" class="bb-h2 about__title">
         {data.title}

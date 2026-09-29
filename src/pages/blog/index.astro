@@ -9,7 +9,7 @@ const [ui, page, posts] = await Promise.all([getUi(), getPage('blog'), getPosts(
 ---
 
 <BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
-  <PageHeader page={page} ui={ui}>
+  <PageHeader page={page}>
     <Button href="/rss.xml" variant="text" icon="rss-feed">
       {ui.blog.rss}
     </Button>

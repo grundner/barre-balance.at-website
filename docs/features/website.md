@@ -129,8 +129,10 @@ sichtbar.
 
 ### WEB-R4 – Platzhalter und Indexierung
 
-- Inhalte, die noch nicht von Isabell bestätigt sind, tragen `placeholder: true`
-  und werden auf der Seite sichtbar als Platzhalter markiert.
+- Inhalte, die noch nicht von Isabell bestätigt sind, tragen `placeholder: true`.
+  Die Kennzeichnung ist intern und wird auf der Seite nicht angezeigt
+  (geändert 2026-09-29, Entscheidung Stephan Grundner; zuvor sichtbare
+  Markierung).
 - Solange `indexing: false` gilt, liefern alle Seiten `noindex` aus.
 - Ein Build mit `indexing: true` **schlägt fehl**, solange Platzhalter-Inhalte
   existieren.
@@ -195,7 +197,7 @@ Nachweis: `tests/e2e/website.spec.ts`, `tests/unit/lib.test.ts`, `npm run lint:s
 - [x] Anfrage-CTAs erzeugen korrekte `mailto:`-, `tel:`- und (falls konfiguriert) WhatsApp-Links mit Kursbezug (WEB-R1).
 - [x] Stimmen ohne `consent: true` erscheinen nicht (WEB-R2).
 - [x] Entwürfe erscheinen nicht im Produktions-Build (WEB-R3).
-- [x] `indexing: false` erzeugt `noindex`; `indexing: true` mit Platzhaltern bricht den Build (WEB-R4).
+- [x] `indexing: false` erzeugt `noindex`; `indexing: true` mit Platzhaltern bricht den Build; Platzhalter sind auf der Seite nicht markiert (WEB-R4).
 - [x] Automatisierte A11y-Prüfung ohne Verstöße auf den Kernseiten (WEB-Q2).
 - [x] Keine Requests an fremde Domains (WEB-Q3).
 - [x] Nutzersichtbare Texte stammen aus `content/` ([ADR-0003](../adr/0003-content-design-separation.md)).

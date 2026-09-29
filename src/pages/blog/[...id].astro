@@ -1,6 +1,5 @@
 ---
 import { render } from 'astro:content';
-import PlaceholderNotice from '../../components/site/PlaceholderNotice.astro';
 import TagList from '../../components/site/TagList.astro';
 import Button from '../../components/ui/Button.astro';
 import Photo from '../../components/ui/Photo.astro';
@@ -32,7 +31,6 @@ const [ui, { Content }] = await Promise.all([getUi(), render(post)]);
       </Button>
     </div>
     <header class="post__header">
-      {data.placeholder && <PlaceholderNotice ui={ui} />}
       <span class="bb-overline">
         <time datetime={isoDate(data.pubDate)}>{formatDate(data.pubDate)}</time>
         {data.updatedDate && (

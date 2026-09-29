@@ -3,23 +3,18 @@
  * Startseiten-Hero in der gewählten Variante (docs/features/website.md#hero-der-startseite).
  * Entscheidung zwischen den Varianten offen (OQ-18).
  */
-import type { Page, Ui } from '../../../lib/content.ts';
+import type { Page } from '../../../lib/content.ts';
 import type { HeroVariant } from '../../../lib/hero.ts';
 import HeroEditorial from './HeroEditorial.astro';
 import HeroFull from './HeroFull.astro';
 
 interface Props {
   page: Page;
-  ui: Ui;
   /** Überschreibt die Variante aus dem Inhalt (nur Dev-Vorschau). */
   variant?: HeroVariant;
 }
 
-const { page, ui, variant = page.data.hero?.variant } = Astro.props;
+const { page, variant = page.data.hero?.variant } = Astro.props;
 ---
 
-{variant === 'vollflaechig' ? (
-  <HeroFull page={page} ui={ui} />
-) : (
-  <HeroEditorial page={page} ui={ui} />
-)}
+{variant === 'vollflaechig' ? <HeroFull page={page} /> : <HeroEditorial page={page} />}

@@ -12,10 +12,6 @@ footer:
   label: Fußzeile
   copyright: © {year} {brand}
 
-placeholder:
-  badge: Platzhalter
-  notice: Dieser Inhalt ist ein Entwurf und noch nicht bestätigt.
-
 inquiry:
   email: Per E-Mail anfragen
   phone: Anrufen

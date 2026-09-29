@@ -3,16 +3,15 @@
  * Startseiten-Hero, Variante „editorial“ (Claude Design: Hero Varianten 2b).
  * Porträt und Detailbild; eine Teal-Linie läuft durch die Komposition.
  */
-import type { Page, Ui } from '../../../lib/content.ts';
+import type { Page } from '../../../lib/content.ts';
 import Photo from '../../ui/Photo.astro';
 import HeroText from './HeroText.astro';
 
 interface Props {
   page: Page;
-  ui: Ui;
 }
 
-const { page, ui } = Astro.props;
+const { page } = Astro.props;
 const { data } = page;
 const detail = data.hero?.detail ?? {};
 const caption = data.hero?.caption ?? [];
@@ -20,7 +19,7 @@ const caption = data.hero?.caption ?? [];
 
 <section class="hero-editorial" aria-labelledby="hero-titel">
   <div class="bb-container hero-editorial__inner">
-    <HeroText page={page} ui={ui} />
+    <HeroText page={page} />
     <figure class="hero-editorial__media">
       <div class="hero-editorial__composition">
         <Photo

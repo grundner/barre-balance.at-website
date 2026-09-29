@@ -2,7 +2,6 @@
 import { render } from 'astro:content';
 import InquiryActions from '../components/site/InquiryActions.astro';
 import PageHeader from '../components/site/PageHeader.astro';
-import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
 import Icon from '../components/ui/Icon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getLocations, getPage, getSite, getUi } from '../lib/content.ts';
@@ -19,7 +18,7 @@ const { contact } = site;
 ---
 
 <BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
-  <PageHeader page={page} ui={ui}>
+  <PageHeader page={page}>
     <InquiryActions site={site} ui={ui} />
   </PageHeader>
 
@@ -28,7 +27,6 @@ const { contact } = site;
       <div class="bb-prose">
         <Content />
       </div>
-      {site.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
       <dl class="contact__list">
         <div class="contact__item">
           <dt>
@@ -93,7 +91,6 @@ const { contact } = site;
                 <span class="location__address">{location.data.address}</span>
               )}
               {location.data.note && <span class="location__note">{location.data.note}</span>}
-              {location.data.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
             </span>
           </li>
         ))}

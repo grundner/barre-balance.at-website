@@ -7,7 +7,6 @@ import type { Site, Slot, Ui } from '../../lib/content.ts';
 import { inquiryLinks } from '../../lib/inquiry.ts';
 import { groupByWeekday } from '../../lib/schedule.ts';
 import Button from '../ui/Button.astro';
-import PlaceholderNotice from './PlaceholderNotice.astro';
 
 interface Props {
   site: Site;
@@ -62,7 +61,6 @@ const Heading = `h${headingLevel}` as 'h2' | 'h3';
                       .join(' · ')}
                   </span>
                 </span>
-                {slot.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
                 {email && (
                   <Button
                     href={email.href}

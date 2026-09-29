@@ -3,16 +3,15 @@
  * Startseiten-Hero, Variante „vollflaechig“ (Claude Design: Hero Varianten 2a).
  * Das Foto trägt; der Text steht auf einem dunklen Schutzverlauf.
  */
-import type { Page, Ui } from '../../../lib/content.ts';
+import type { Page } from '../../../lib/content.ts';
 import Photo from '../../ui/Photo.astro';
 import HeroText from './HeroText.astro';
 
 interface Props {
   page: Page;
-  ui: Ui;
 }
 
-const { page, ui } = Astro.props;
+const { page } = Astro.props;
 const wide = page.data.hero?.wide ?? {};
 ---
 
@@ -28,7 +27,7 @@ const wide = page.data.hero?.wide ?? {};
   />
   <div class="hero-full__scrim"></div>
   <div class="bb-container hero-full__content">
-    <HeroText page={page} ui={ui} onDark />
+    <HeroText page={page} onDark />
   </div>
 </section>
 

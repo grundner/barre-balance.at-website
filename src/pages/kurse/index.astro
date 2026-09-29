@@ -8,7 +8,7 @@ const [ui, page, courses] = await Promise.all([getUi(), getPage('kurse'), getCou
 ---
 
 <BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
-  <PageHeader page={page} ui={ui} />
+  <PageHeader page={page} />
   <div class="bb-container courses">
     <div class="bb-grid">
       {courses.map((course) => (

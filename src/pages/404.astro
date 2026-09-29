@@ -2,13 +2,13 @@
 import PageHeader from '../components/site/PageHeader.astro';
 import Button from '../components/ui/Button.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getPage, getUi } from '../lib/content.ts';
+import { getPage } from '../lib/content.ts';
 
-const [ui, page] = await Promise.all([getUi(), getPage('404')]);
+const page = await getPage('404');
 ---
 
 <BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
-  <PageHeader page={page} ui={ui}>
+  <PageHeader page={page}>
     <div class="not-found__ctas">
       {page.data.ctas.map((cta, index) => (
         <Button href={cta.href} variant={index === 0 ? 'contained' : 'outlined'} size="large">

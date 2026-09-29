@@ -134,9 +134,9 @@ test.describe('Regeln', () => {
     expect(await (await request.get('/robots.txt')).text()).toContain('Disallow: /');
   });
 
-  test('WEB-R4: Platzhalter sind sichtbar markiert', async ({ page }) => {
+  test('WEB-R4: Platzhalter werden nicht sichtbar markiert', async ({ page }) => {
     await page.goto('/kurse/');
-    await expect(page.locator('.placeholder-banner')).toBeVisible();
+    await expect(page.getByText('Platzhalter', { exact: true })).toHaveCount(0);
   });
 });
 

@@ -1,22 +1,19 @@
 ---
 /** Textblock des Startseiten-Heros, gemeinsam für alle Varianten. */
-import type { Page, Ui } from '../../../lib/content.ts';
+import type { Page } from '../../../lib/content.ts';
 import Button from '../../ui/Button.astro';
-import PlaceholderNotice from '../PlaceholderNotice.astro';
 
 interface Props {
   page: Page;
-  ui: Ui;
   /** Helle Schrift auf dunklem Grund (Variante „vollflaechig“). */
   onDark?: boolean;
 }
 
-const { page, ui, onDark = false } = Astro.props;
+const { page, onDark = false } = Astro.props;
 const { data } = page;
 ---
 
 <div class:list={['hero-text', { 'hero-text--on-dark': onDark }]}>
-  {data.placeholder && <PlaceholderNotice ui={ui} />}
   {data.overline && <span class="bb-overline hero-text__overline">{data.overline}</span>}
   <h1 id="hero-titel" class="bb-h1 hero-text__title">
     {data.title}
@@ -75,12 +72,6 @@ const { data } = page;
   .hero-text--on-dark .hero-text__overline,
   .hero-text--on-dark .hero-text__lead {
     color: var(--bb-white);
-  }
-
-  /* Platzhalter-Hinweis bleibt auf dem Foto deckend und lesbar. */
-  .hero-text--on-dark :global(.placeholder-banner) {
-    color: var(--bb-text-primary);
-    background: linear-gradient(var(--bb-warning-bg), var(--bb-warning-bg)), var(--bb-white);
   }
 
   .hero-text--on-dark .hero-text__marker {

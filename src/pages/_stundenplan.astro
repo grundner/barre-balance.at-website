@@ -4,7 +4,6 @@
  * vom Build aus; zum Reaktivieren umbenennen in stundenplan.astro (siehe docs/features/website.md).
  */
 import PageHeader from '../components/site/PageHeader.astro';
-import PlaceholderNotice from '../components/site/PlaceholderNotice.astro';
 import ScheduleList from '../components/site/ScheduleList.astro';
 import Alert from '../components/ui/Alert.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -22,7 +21,7 @@ const [site, ui, page, slots, notices] = await Promise.all([
 ---
 
 <BaseLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description}>
-  <PageHeader page={page} ui={ui} />
+  <PageHeader page={page} />
   <div class="bb-container schedule-page">
     {notices.length > 0 && (
       <section class="notices" aria-labelledby="hinweise-titel">
@@ -38,7 +37,6 @@ const [site, ui, page, slots, notices] = await Promise.all([
             })}
           >
             {notice.data.text}
-            {notice.data.placeholder && <PlaceholderNotice ui={ui} variant="chip" />}
           </Alert>
         ))}
       </section>
