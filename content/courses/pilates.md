@@ -7,7 +7,8 @@ duration: 60
 suitableFor: Wird mit Isabell abgestimmt.
 bring: []
 order: 2
-imageLabel: Kursbild · Pilates auf der Matte, 3:2
+image: ../images/matte-ausfallschritt-studio-tageslicht.jpg
+imageAlt: Zwei Frauen im Ausfallschritt auf Matten in einem lichtdurchfluteten Studio.
 placeholder: true
 ---
 

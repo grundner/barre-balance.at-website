@@ -4,7 +4,8 @@ seoTitle: Über Isabell
 description: Isabell Grundner unterrichtet seit 2015 Tanz und Bewegung – heute Barre, Pilates und Modern Jazz in Tirol.
 overline: Über Isabell
 lead: Angefangen hat alles mit Jazzdance.
-imageLabel: Porträt · Isabell, Tageslicht, 3:4
+image: ../images/isabell-tanzprobe-schwarzweiss.jpg
+imageAlt: Isabell bei einer Tanzprobe, ein Arm hoch erhoben; Schwarz-Weiß-Aufnahme.
 sections:
   qualifications:
     overline: Weg

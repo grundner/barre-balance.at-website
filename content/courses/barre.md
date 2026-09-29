@@ -7,7 +7,8 @@ duration: 45
 suitableFor: Wird mit Isabell abgestimmt.
 bring: []
 order: 1
-imageLabel: Kursbild · Detailaufnahme Fuß und Stange, 3:2
+image: ../images/barre-fuesse-an-der-stange.jpg
+imageAlt: Barfüßige Teilnehmerinnen in Trainingskleidung an der Ballettstange.
 placeholder: true
 ---
 

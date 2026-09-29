@@ -7,7 +7,8 @@ duration: 60
 suitableFor: Wird mit Isabell abgestimmt.
 bring: []
 order: 3
-imageLabel: Kursbild · Bewegung im Raum, 3:2
+image: ../images/isabell-buehne-ensemble-beinheben.jpg
+imageAlt: Isabell tanzt mit zwei Tänzerinnen auf der Bühne, ein Bein hoch gehoben.
 placeholder: true
 ---
 

@@ -4,7 +4,8 @@ description: Ein erster Beitrag – Beispiel für den Aufbau eines Blog-Beitrags
 pubDate: 2026-09-12
 tags:
   - Neuigkeiten
-imageLabel: Beitragsbild · 3:2
+image: ../images/barre-gruppe-plie-spiegel.jpg
+imageAlt: Eine Gruppe im Plié mit ausgestreckten Armen vor einem Spiegel.
 placeholder: true
 ---
 
