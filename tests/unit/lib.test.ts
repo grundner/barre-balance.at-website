@@ -14,6 +14,7 @@ import {
 import { assertLaunchReady, findPlaceholders } from '../../src/lib/launch.ts';
 import { groupByWeekday, sortSlots } from '../../src/lib/schedule.ts';
 import { format, slugify } from '../../src/lib/text.ts';
+import { isPast, upcoming, zonedDateTime } from '../../src/lib/timing.ts';
 
 const texts = {
   email: 'Per E-Mail anfragen',
@@ -24,6 +25,7 @@ const texts = {
   bodyGeneral: 'Hallo Isabell,\n\n',
   bodyCourse: 'Hallo Isabell,\n\nich interessiere mich für {course}{slot}.\n',
   slot: ' am {weekday} um {time}',
+  session: ' am {date} um {time} Uhr',
 };
 
 describe('text', () => {
@@ -66,6 +68,18 @@ describe('inquiry (WEB-R1)', () => {
       'Hallo Isabell,\n\nich interessiere mich für Barre.\n',
     );
     assert.equal(inquiryMessage(texts).subject, 'Anfrage');
+  });
+
+  it('nennt bei einem konkreten Termin das Datum statt des Wochentags', () => {
+    assert.equal(
+      inquiryMessage(texts, {
+        course: 'Barre',
+        date: 'Mittwoch, 7. Oktober',
+        weekday: 'Mittwoch',
+        time: '18:30',
+      }).body,
+      'Hallo Isabell,\n\nich interessiere mich für Barre am Mittwoch, 7. Oktober um 18:30 Uhr.\n',
+    );
   });
 
   it('bietet nur konfigurierte Kanäle an', () => {
@@ -122,5 +136,34 @@ describe('launch (WEB-R4)', () => {
     assert.throws(() => assertLaunchReady(true, ['pages/home']), /Platzhalter/);
     assert.doesNotThrow(() => assertLaunchReady(false, ['pages/home']));
     assert.doesNotThrow(() => assertLaunchReady(true, []));
+  });
+});
+
+describe('timing (WEB-R7)', () => {
+  it('rechnet Tiroler Ortszeit in Sommer- und Winterzeit korrekt um', () => {
+    assert.equal(zonedDateTime('2026-07-01', '18:30').toISOString(), '2026-07-01T16:30:00.000Z');
+    assert.equal(zonedDateTime('2026-12-01', '18:30').toISOString(), '2026-12-01T17:30:00.000Z');
+    // Tag der Umstellung auf Winterzeit (25.10.2026, 03:00 → 02:00)
+    assert.equal(zonedDateTime('2026-10-25', '18:00').toISOString(), '2026-10-25T17:00:00.000Z');
+  });
+
+  it('gilt ab Beginn als vergangen', () => {
+    const start = zonedDateTime('2026-10-07', '18:30');
+    assert.equal(isPast(start, new Date('2026-10-07T16:29:59Z')), false);
+    assert.equal(isPast(start, new Date('2026-10-07T16:30:00Z')), false);
+    assert.equal(isPast(start, new Date('2026-10-07T16:30:01Z')), true);
+  });
+
+  it('liefert nur Kommendes, aufsteigend sortiert', () => {
+    const items = [
+      { id: 'c', start: zonedDateTime('2026-10-12', '18:00') },
+      { id: 'a', start: zonedDateTime('2026-09-01', '18:00') },
+      { id: 'b', start: zonedDateTime('2026-10-08', '19:00') },
+    ];
+    const now = new Date('2026-09-29T12:00:00Z');
+    assert.deepEqual(
+      upcoming(items, (item) => item.start, now).map((item) => item.id),
+      ['b', 'c'],
+    );
   });
 });

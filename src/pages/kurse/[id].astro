@@ -1,10 +1,11 @@
 ---
 import { render } from 'astro:content';
 import InquiryActions from '../../components/site/InquiryActions.astro';
+import NextSessionList from '../../components/site/NextSessionList.astro';
 import Chip from '../../components/ui/Chip.astro';
 import Photo from '../../components/ui/Photo.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCourses, getSite, getUi } from '../../lib/content.ts';
+import { getCourses, getNextSessions, getSite, getUi } from '../../lib/content.ts';
 
 export async function getStaticPaths() {
   const courses = await getCourses();
@@ -13,7 +14,12 @@ export async function getStaticPaths() {
 
 const { course } = Astro.props;
 const { data } = course;
-const [site, ui, { Content }] = await Promise.all([getSite(), getUi(), render(course)]);
+const [site, ui, sessions, { Content }] = await Promise.all([
+  getSite(),
+  getUi(),
+  getNextSessions({ courseId: course.id }),
+  render(course),
+]);
 ---
 
 <BaseLayout title={data.title} description={data.summary}>
@@ -67,6 +73,15 @@ const [site, ui, { Content }] = await Promise.all([getSite(), getUi(), render(co
           </div>
         )}
       </dl>
+
+      {sessions.length > 0 && (
+        <section class="course__session" aria-labelledby="termin-titel">
+          <h2 id="termin-titel" class="bb-h4">
+            {ui.sessions.courseTitle}
+          </h2>
+          <NextSessionList site={site} ui={ui} sessions={sessions} hideCourse />
+        </section>
+      )}
     </div>
 
     <aside class="course__aside" aria-labelledby="anfrage-titel">
@@ -137,6 +152,14 @@ const [site, ui, { Content }] = await Promise.all([getSite(), getUi(), render(co
   .course__bring {
     margin: 0;
     padding-left: 1.25em;
+  }
+
+  .course__session {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bb-space-3);
+    padding-top: var(--bb-space-3);
+    border-top: var(--bb-border);
   }
 
   .course__aside {

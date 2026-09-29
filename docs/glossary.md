@@ -15,6 +15,7 @@ verwendet – wie das Ausgangsbriefing – für Kundinnen und Teilnehmerinnen
 | **Termin** | Ein konkreter Zeitpunkt, zu dem ein Kurs stattfindet und gebucht werden kann. |
 | **Serienkurs** | Ein Kurs mit wiederkehrenden Terminen, den Isabell im Betreiberbereich anlegt. |
 | **Specials / Workshops** | Sonderformate neben den regulären Kursen. Ausgestaltung offen. |
+| **Nächster Termin** | Der eine nächste konkrete Termin eines Kurses (Datum, Uhrzeit, Ort) auf der Website. Je Kurs gibt es höchstens einen. |
 | **Stundenplan** | Übersicht der buchbaren Termine. |
 | **Gutschein** | Perspektivisches Angebot (Kandidat); Ausgestaltung offen. |
 

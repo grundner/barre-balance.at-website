@@ -12,6 +12,10 @@ ctas:
   - label: Isabell kennenlernen
     href: /ueber-isabell/
 sections:
+  sessions:
+    overline: Termine
+    title: Nächste Termine
+    lead: Die nächsten Termine je Kurs. Frag deinen Platz einfach an.
   courses:
     overline: Kurse
     title: Formate

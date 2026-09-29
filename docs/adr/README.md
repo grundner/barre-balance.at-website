@@ -9,3 +9,4 @@ Vorlage: [`.claude/templates/adr.md`](../../.claude/templates/adr.md).
 | [0001](0001-static-website-astro.md) | Statische Website mit Astro | Accepted |
 | [0002](0002-hosting-github-pages-cloudflare-dns.md) | Hosting auf GitHub Pages, DNS über Cloudflare | Accepted |
 | [0003](0003-content-design-separation.md) | Strikte Trennung von Inhalt und Design | Accepted |
+| [0004](0004-time-dependent-content.md) | Zeitabhängige Inhalte zum Build-Zeitpunkt, nächtlicher Rebuild | Accepted |

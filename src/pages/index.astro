@@ -3,17 +3,27 @@ import BlogCard from '../components/site/BlogCard.astro';
 import CourseCard from '../components/site/CourseCard.astro';
 import Hero from '../components/site/Hero.astro';
 import InquiryActions from '../components/site/InquiryActions.astro';
+import NextSessionList from '../components/site/NextSessionList.astro';
 import Testimonials from '../components/site/Testimonials.astro';
 import Button from '../components/ui/Button.astro';
 import Section from '../components/ui/Section.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCourses, getPage, getPosts, getSite, getTestimonials, getUi } from '../lib/content.ts';
+import {
+  getCourses,
+  getNextSessions,
+  getPage,
+  getPosts,
+  getSite,
+  getTestimonials,
+  getUi,
+} from '../lib/content.ts';
 
-const [site, ui, page, courses, testimonials, posts] = await Promise.all([
+const [site, ui, page, courses, sessions, testimonials, posts] = await Promise.all([
   getSite(),
   getUi(),
   getPage('home'),
   getCourses(),
+  getNextSessions(),
   getTestimonials(),
   getPosts(),
 ]);
@@ -25,6 +35,7 @@ function section(key: string) {
   return value;
 }
 
+const sessionsSection = section('sessions');
 const coursesSection = section('courses');
 const philosophySection = section('philosophy');
 const testimonialsSection = section('testimonials');
@@ -34,6 +45,18 @@ const inquirySection = section('inquiry');
 
 <BaseLayout title={data.seoTitle ?? data.title} description={data.description} isHome>
   <Hero page={page} />
+
+  {sessions.length > 0 && (
+    <Section
+      id="termine"
+      tone="white"
+      overline={sessionsSection.overline}
+      title={sessionsSection.title}
+      lead={sessionsSection.lead}
+    >
+      <NextSessionList site={site} ui={ui} sessions={sessions} />
+    </Section>
+  )}
 
   <Section
     id="kurse"

@@ -126,6 +126,46 @@ test.describe('Regeln', () => {
     await expect(pilates.locator('img')).toHaveCSS('object-position', '50% 28%');
   });
 
+  // Termine sind echte, zeitabhängige Inhalte (WEB-R7): geprüft werden nur Invarianten,
+  // damit die Tests nicht mit dem Datum veralten (ADR-0004).
+  test('WEB-R8: nächste Termine – je Kurs höchstens einer, sortiert, wie im Kursdetail', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const items = page.locator('#termine .session');
+    const home = await items.evaluateAll((els) =>
+      els.map((el) => ({
+        course: el.getAttribute('data-course') ?? '',
+        start: el.querySelector('time')?.getAttribute('datetime') ?? '',
+      })),
+    );
+    expect(new Set(home.map((s) => s.course)).size).toBe(home.length);
+    expect(home.map((s) => s.start)).toEqual([...home.map((s) => s.start)].sort());
+    for (const session of home) {
+      expect(Date.parse(session.start)).not.toBeNaN();
+      await expect(
+        page.locator(`#termine .session[data-course="${session.course}"] a[data-inquiry="email"]`),
+      ).toHaveCount(1);
+    }
+
+    await page.goto('/kurse/');
+    const courses = await page
+      .locator('.card a.card__link')
+      .evaluateAll((links) => links.map((l) => l.getAttribute('href') ?? ''));
+    expect(home.length).toBeLessThanOrEqual(courses.length);
+    for (const href of courses) {
+      await page.goto(href);
+      const id = href.split('/').filter(Boolean).pop();
+      const expected = home.find((s) => s.course === id)?.start;
+      const shown = page.locator('.course__session time');
+      if (expected) {
+        await expect(shown).toHaveAttribute('datetime', expected);
+      } else {
+        await expect(shown).toHaveCount(0);
+      }
+    }
+  });
+
   test('WEB-R2: Stimmen ohne Einwilligung erscheinen nicht', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByText('Beispielstimme ohne Einwilligung')).toHaveCount(0);

@@ -1,5 +1,5 @@
 # Build, Prüfung und Deploy auf GitHub Pages (ADR-0002).
-# Pull Requests werden nur geprüft; Pushes auf main werden zusätzlich veröffentlicht.
+# Pull Requests werden nur geprüft; Pushes auf main und der nächtliche Lauf werden zusätzlich veröffentlicht.
 name: Build & Deploy
 
 on:
@@ -7,6 +7,9 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  # Nächtlicher Rebuild für zeitabhängige Inhalte (ADR-0004), 01:30 UTC = 02:30/03:30 in Tirol.
+  schedule:
+    - cron: '30 1 * * *'
 
 permissions:
   contents: read

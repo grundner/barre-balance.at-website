@@ -13,6 +13,7 @@ Status: **Akzeptiert**
 | Client-JS | Standardmäßig keines | [Website WEB-Q4](../features/website.md#qualitätsanforderungen) |
 | Schriften / Icons | Selbst gehostet bzw. Inline-SVG, keine Third-Party-Requests | [ADR-0001](../adr/0001-static-website-astro.md) |
 | Hosting | GitHub Pages, öffentliches Repository, Deploy über GitHub Actions | [ADR-0002](../adr/0002-hosting-github-pages-cloudflare-dns.md) |
+| Zeitabhängige Inhalte | Auswertung beim Build, nächtlicher automatischer Rebuild | [ADR-0004](../adr/0004-time-dependent-content.md) |
 | DNS / Domain | Cloudflare DNS, `barre-balance.at` (Apex), `www` leitet um | [ADR-0002](../adr/0002-hosting-github-pages-cloudflare-dns.md) |
 
 ### Bausteine

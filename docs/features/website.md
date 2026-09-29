@@ -32,9 +32,9 @@ Nicht Teil dieses Scopes:
 
 | ID | Seite | Pfad | Inhalt |
 |---|---|---|---|
-| WEB-P1 | Home | `/` | [Hero](#hero-der-startseite), Kursauswahl, Philosophie-Teaser, Stimmen, Blog-Teaser, Anfrage-CTA |
+| WEB-P1 | Home | `/` | [Hero](#hero-der-startseite), [Nächste Termine](#web-r8--nächster-termin-je-kurs), Kursauswahl, Philosophie-Teaser, Stimmen, Blog-Teaser, Anfrage-CTA |
 | WEB-P2 | Kurse | `/kurse/` | Übersicht aller veröffentlichten Kurse |
-| WEB-P3 | Kursdetail | `/kurse/<kurs>/` | Beschreibung, Eckdaten, Anfrage-CTA |
+| WEB-P3 | Kursdetail | `/kurse/<kurs>/` | Beschreibung, Eckdaten, nächster Termin, Anfrage-CTA |
 | WEB-P4 | Stundenplan | `/stundenplan/` | **Zurückgestellt**, siehe [Zurückgestellt: Stundenplan](#zurückgestellt-stundenplan) |
 | WEB-P5 | Über Isabell | `/ueber-isabell/` | Storytelling, Qualifikationen als Vertrauenssignal |
 | WEB-P6 | Philosophie | `/philosophie/` | Was Movement für Isabell bedeutet |
@@ -88,7 +88,8 @@ das Format der jeweiligen Darstellung sichtbar bleibt (Standard: Bildmitte).
 | Website-Einstellungen | Marke, Kontaktkanäle, Navigation, Social-Links, Indexierung | Markenname, E-Mail, Telefon, WhatsApp (optional), Instagram (optional), Navigation, Footer-Links, `indexing` |
 | UI-Texte | Alle wiederkehrenden Oberflächentexte | Button-Labels, Overlines, Leerzustände, Anfrage-Vorlagen |
 | Seite | Redaktioneller Text einer Seite | Titel, Beschreibung (SEO), Overline, Lead, Fließtext, Bild, `placeholder` |
-| Kurs | Ein Kursformat (siehe [Glossar](../glossary.md)) | Titel, Kurzbeschreibung, Format, Intensität, Dauer, für wen geeignet, Mitbringen, Reihenfolge, Bild, `placeholder` |
+| Kurs | Ein Kursformat (siehe [Glossar](../glossary.md)) | Titel, Kurzbeschreibung, Format, Intensität, Dauer, für wen geeignet, Mitbringen, Reihenfolge, Bild, nächster Termin (optional), `placeholder` |
+| Nächster Termin | Teil eines Kurses, höchstens einer je Kurs | Datum, Uhrzeit (Ortszeit Tirol), Ort, Hinweis (optional) |
 | Ort | Unterrichtsort | Name, Adresse, Hinweis |
 | Stundenplan-Eintrag | Regelmäßiger wöchentlicher Termin (zurückgestellt, wird gepflegt, aber nicht angezeigt) | Wochentag, Uhrzeit, Dauer, Kurs, Ort, Hinweis |
 | Hinweis | Zeitlich begrenzte Information zum Stundenplan (z. B. Pause; zurückgestellt) | Text, von, bis |
@@ -107,7 +108,7 @@ nur die in den Website-Einstellungen konfigurierten Kanäle:
 
 - **E-Mail:** `mailto:` mit vorausgefülltem Betreff und Text aus den UI-Texten.
   Bei kurs- oder terminbezogenen CTAs enthält die Vorlage Kursname und,
-  falls vorhanden, Wochentag und Uhrzeit.
+  falls vorhanden, Datum bzw. Wochentag und Uhrzeit.
 - **Telefon:** `tel:`-Link.
 - **WhatsApp** (nur wenn konfiguriert): Link auf `wa.me` mit vorausgefülltem Text.
 
@@ -166,6 +167,32 @@ damit der Stundenplan ohne Neugestaltung reaktiviert werden kann. Eine
 Reaktivierung erfordert eine ausdrückliche Entscheidung; die Beispieltermine
 müssen dann von Isabell bestätigt werden.
 
+### WEB-R7 – Zeitabhängige Inhalte
+
+Übergreifende Regel für alle Inhalte mit Datum und Uhrzeit (derzeit: nächster
+Termin; künftig z. B. Blog oder Kalender). Technische Umsetzung:
+[ADR-0004](../adr/0004-time-dependent-content.md).
+
+- Datum und Uhrzeit gelten in der Ortszeit Tirols (`Europe/Vienna`).
+- Ein zeitabhängiger Inhalt ist vergangen, sobald sein Beginn vor dem
+  Zeitpunkt des Builds liegt. Vergangene Inhalte werden nicht ausgeliefert.
+- Die Website wird jede Nacht automatisch neu gebaut; Vergangenes verschwindet
+  damit spätestens am Folgetag.
+
+### WEB-R8 – Nächster Termin je Kurs
+
+- Jeder Kurs hat **höchstens einen** nächsten Termin: Datum, Uhrzeit, Ort und
+  optional einen Hinweis. Die Dauer ist die Kursdauer.
+- Ein vergangener Termin wird nicht angezeigt (WEB-R7); der Kurs gilt dann als
+  ohne Termin.
+- **Kursdetail:** Hat der Kurs einen Termin, erscheint er mit Datum, Uhrzeit,
+  Ort und einem Anfrage-CTA. Ohne Termin entfällt der Bereich.
+- **Startseite:** Direkt nach dem Hero zeigt die Section „Nächste Termine“ die
+  Termine aller Kurse – also höchstens einen je Kurs –, sortiert nach Datum.
+  Gibt es keinen Termin, entfällt die Section.
+- Jeder Termin verlinkt auf seinen Kurs und bietet eine Anfrage mit Kursname,
+  Datum und Uhrzeit (WEB-R1).
+
 ---
 
 ## Qualitätsanforderungen
@@ -197,4 +224,6 @@ Nachweis: `tests/e2e/website.spec.ts`, `tests/unit/lib.test.ts`, `npm run lint:s
 - [x] Automatisierte A11y-Prüfung ohne Verstöße auf den Kernseiten (WEB-Q2).
 - [x] Keine Requests an fremde Domains (WEB-Q3).
 - [x] Nutzersichtbare Texte stammen aus `content/` ([ADR-0003](../adr/0003-content-design-separation.md)).
+- [x] Vergangene Termine werden nicht ausgeliefert; Zeitzone Tirol (WEB-R7, Unit-Tests mit festen Zeitpunkten).
+- [x] Die Startseite zeigt höchstens einen Termin je Kurs, nach Datum sortiert, und nur, wenn es Termine gibt; Kursdetail und Startseite zeigen denselben Termin (WEB-R8).
 - [x] Die Website ist unter `https://barre-balance.at` per HTTPS erreichbar; `www` leitet um. *(geprüft 2026-09-12)*

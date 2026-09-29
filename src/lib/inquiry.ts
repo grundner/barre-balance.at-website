@@ -19,11 +19,14 @@ export interface InquiryTexts {
   bodyGeneral: string;
   bodyCourse: string;
   slot: string;
+  session: string;
 }
 
 export interface InquiryContext {
   course?: string;
   weekday?: string;
+  /** Konkretes Datum eines Termins, z. B. „Mittwoch, 7. Oktober“; hat Vorrang vor dem Wochentag. */
+  date?: string;
   time?: string;
 }
 
@@ -49,7 +52,7 @@ export function whatsappHref(number: string, text: string): string {
   return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 }
 
-/** Baut den Anfragetext; mit Kurs und optional Wochentag und Uhrzeit. */
+/** Baut den Anfragetext; mit Kurs und optional Datum bzw. Wochentag und Uhrzeit. */
 export function inquiryMessage(
   texts: InquiryTexts,
   context: InquiryContext = {},
@@ -57,10 +60,12 @@ export function inquiryMessage(
   if (!context.course) {
     return { subject: texts.subjectGeneral, body: texts.bodyGeneral };
   }
-  const slot =
-    context.weekday && context.time
-      ? format(texts.slot, { weekday: context.weekday, time: context.time })
-      : '';
+  let slot = '';
+  if (context.date && context.time) {
+    slot = format(texts.session, { date: context.date, time: context.time });
+  } else if (context.weekday && context.time) {
+    slot = format(texts.slot, { weekday: context.weekday, time: context.time });
+  }
   return {
     subject: format(texts.subjectCourse, { course: context.course }),
     body: format(texts.bodyCourse, { course: context.course, slot }),

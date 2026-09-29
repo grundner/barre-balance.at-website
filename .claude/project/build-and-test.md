@@ -33,4 +33,10 @@ in their names. Keep IDs aligned when requirements change.
 ## Deployment
 
 Push to `main` → GitHub Actions (`.github/workflows/deploy.yml`) runs all checks
-and deploys `dist/` to GitHub Pages. Pull requests run checks only.
+and deploys `dist/` to GitHub Pages. Pull requests run checks only. A scheduled
+run rebuilds and deploys `main` every night (01:30 UTC) so time-dependent content
+expires (ADR-0004).
+
+Time-dependent content (dates, times): always use `src/lib/timing.ts` and
+`BUILD_TIME`; test the logic with fixed instants in unit tests and keep E2E tests
+free of assumptions about real content dates.

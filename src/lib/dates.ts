@@ -14,3 +14,15 @@ export function formatDate(date: Date): string {
 export function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+const sessionDateFormat = new Intl.DateTimeFormat('de-AT', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  timeZone: 'Europe/Vienna',
+});
+
+/** Termin-Datum mit Wochentag, z. B. „Mittwoch, 7. Oktober“. */
+export function formatSessionDate(date: Date): string {
+  return sessionDateFormat.format(date);
+}

@@ -2,6 +2,7 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { findPlaceholders } from './launch.ts';
 import { sortSlots } from './schedule.ts';
+import { BUILD_TIME, upcoming, zonedDateTime } from './timing.ts';
 
 async function required<C extends 'site' | 'ui' | 'pages'>(collection: C, id: string) {
   const entry = await getEntry(collection, id);
@@ -23,6 +24,34 @@ export async function getCourses() {
   const courses = await getCollection('courses');
   return courses.sort((a, b) => a.data.order - b.data.order);
 }
+
+/**
+ * Kommende nächste Termine aller Kurse, höchstens einer je Kurs, nach Beginn sortiert
+ * (WEB-R8). Vergangene Termine entfallen zum Build-Zeitpunkt (WEB-R7).
+ */
+export async function getNextSessions(filter?: { courseId?: string }) {
+  const courses = (await getCourses()).filter(
+    (course) => !filter?.courseId || course.id === filter.courseId,
+  );
+  const sessions = await Promise.all(
+    courses.flatMap((course) => {
+      const session = course.data.nextSession;
+      if (!session) return [];
+      return [
+        getEntry(session.location).then((location) => ({
+          course,
+          location,
+          start: zonedDateTime(session.date, session.time),
+          time: session.time,
+          note: session.note,
+        })),
+      ];
+    }),
+  );
+  return upcoming(sessions, (session) => session.start, BUILD_TIME);
+}
+
+export type NextSession = Awaited<ReturnType<typeof getNextSessions>>[number];
 
 export async function getLocations() {
   const locations = await getCollection('locations');

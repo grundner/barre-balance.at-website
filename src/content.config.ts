@@ -97,6 +97,7 @@ const ui = defineCollection({
       bodyGeneral: z.string(),
       bodyCourse: z.string(),
       slot: z.string(),
+      session: z.string(),
     }),
     contact: z.object({
       email: z.string(),
@@ -118,6 +119,11 @@ const ui = defineCollection({
       scheduleTitle: z.string(),
       scheduleEmpty: z.string(),
       inquiryTitle: z.string(),
+    }),
+    sessions: z.object({
+      courseTitle: z.string(),
+      time: z.string(),
+      inquire: z.string(),
     }),
     schedule: z.object({
       inquire: z.string(),
@@ -172,6 +178,18 @@ const courses = defineCollection({
         suitableFor: z.string().min(1),
         bring: z.array(z.string().min(1)).default([]),
         order: z.number().int(),
+        /** Höchstens ein nächster Termin je Kurs (WEB-R8). */
+        nextSession: z
+          .object({
+            // YAML liest ein unquotiertes Datum als Date (UTC-Mitternacht) ein.
+            date: z
+              .union([z.date().transform((d) => d.toISOString().slice(0, 10)), z.string()])
+              .pipe(z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Datum im Format JJJJ-MM-TT')),
+            time,
+            location: reference('locations'),
+            note: z.string().min(1).optional(),
+          })
+          .optional(),
         placeholder,
         ...imageFields(image),
       })

@@ -27,6 +27,7 @@ inquiry:
     ich interessiere mich für {course}{slot}.
 
   slot: " am {weekday} um {time}"
+  session: " am {date} um {time} Uhr"
 
 contact:
   email: E-Mail
@@ -47,6 +48,11 @@ courses:
   scheduleTitle: Termine
   scheduleEmpty: Für diesen Kurs gibt es derzeit keine regelmäßigen Termine.
   inquiryTitle: Interesse an diesem Kurs?
+
+sessions:
+  courseTitle: Nächster Termin
+  time: "{time} Uhr"
+  inquire: Anfragen
 
 schedule:
   inquire: Anfragen
