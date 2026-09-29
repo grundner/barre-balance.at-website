@@ -28,5 +28,7 @@ and the ADRs in [`docs/adr/`](../../docs/adr/README.md).
 - Work happens on feature branches named `feature/<topic>` (short, kebab-case,
   English), branched from `main`.
 - One topic per branch: a new topic starts a new branch.
-- Changes reach `main` via pull request; pushing to `main` deploys the site
+- No pull requests. Pushing to `main` deploys the site
   (see [build-and-test.md](build-and-test.md)).
+- Deploy only on the user's explicit instruction. Then: commit on the feature
+  branch, push the branch, merge it into `main`, push `main` to `origin`.
