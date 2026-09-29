@@ -15,7 +15,7 @@ Relevant parts in the design project:
 | `assets/*.svg` | Signet geometry reproduced in `Logo.astro`, `public/favicon.svg`, `scripts/generate-og-image.mjs` |
 | `components/**.jsx` | Reference for the `.astro` ports in `src/components/ui/` |
 | `ui_kits/website/*.jsx` | Layout reference for pages; **all texts there are placeholders** |
-| `ui_kits/website/Hero Varianten.html` | Home hero variants 2a/2b → `HeroFull.astro`, `HeroEditorial.astro` |
+| `ui_kits/website/Hero Varianten.html` | Home hero, variant 2a only → `src/components/site/Hero.astro` |
 
 A local copy of the design skill lives in [`.claude/skills/barre-balance-design/`](../skills/barre-balance-design/SKILL.md).
 
@@ -56,4 +56,4 @@ Accepted deviations should be carried over into Claude Design so both sides matc
 | DS-DEV-1 | Filled primary buttons use **Teal-dark** (`--bb-teal-dark`) instead of Teal; hover goes to Deep | White on Teal `#1B9AAA` = 3.36:1 (fails AA for button text); on Teal-dark = 5.77:1 | **Accepted** by the product owner (2026-09-12); not yet updated in Claude Design |
 | DS-DEV-2 | Overlines, timeline years and small meta texts use `--bb-text-secondary` instead of `--bb-text-muted` | Muted on page background = 3.40:1; secondary = 6.41:1 | Pending design decision |
 | DS-DEV-3 | Links inside running text (`.bb-prose`) are underlined | DS links have no underline; WCAG 1.4.1 | Pending design decision |
-| DS-DEV-4 | Hero „Vollflächig“ (2a): stronger protection gradient (desktop 78 % → 64 % at 45 % → 0 at 80 %; mobile bottom-up 82 % → 66 % → 30 %) | Design gradient (62 % → 28 % → 0) leaves white lead text at ≈ 3.9:1 on a bright photo; needs ≥ 4.5:1 | Pending design decision (together with OQ-18) |
+| DS-DEV-4 | Home hero (2a): stronger protection gradient (desktop 78 % → 64 % at 45 % → 0 at 80 %; mobile bottom-up 82 % → 66 % → 30 %) | Design gradient (62 % → 28 % → 0) leaves white lead text at ≈ 3.9:1 on a bright photo; needs ≥ 4.5:1 | Pending design decision |

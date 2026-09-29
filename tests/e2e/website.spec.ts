@@ -113,6 +113,13 @@ test.describe('Regeln', () => {
     await expect(page.locator('a[href="/stundenplan/"]')).toHaveCount(0);
   });
 
+  test('Startseite zeigt den vollflächigen Hero mit Foto (WEB-P1)', async ({ page }) => {
+    await page.goto('/');
+    const hero = page.locator('section.hero');
+    await expect(hero.locator('h1')).toBeVisible();
+    await expect(hero.locator('img.hero__photo')).toHaveAttribute('alt', /.+/);
+  });
+
   test('WEB-R2: Stimmen ohne Einwilligung erscheinen nicht', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByText('Beispielstimme ohne Einwilligung')).toHaveCount(0);

@@ -4,20 +4,8 @@ seoTitle: Barre, Pilates und Tanz in Tirol
 description: Barre, Pilates und Tanz mit Isabell Grundner in Kitzbühel, St. Johann in Tirol und Fieberbrunn.
 overline: Kitzbühel · St. Johann · Fieberbrunn
 lead: Barre, Pilates und Tanz mit Isabell Grundner. Kraft, Mobilität und Körpergefühl – persönlich begleitet.
-image: ../images/isabell-tanz-wald.jpg
-imageAlt: Isabell sitzt tanzend auf einem Baumstumpf im Wald, Arme und Beine weit ausgestreckt.
-# Hero-Variante: vollflaechig (Design 2a) oder editorial (Design 2b) – Entscheidung offen (OQ-18)
-hero:
-  variant: editorial
-  wide:
-    image: ../images/barre-kurs-warmes-licht.jpg
-    imageAlt: Frauen trainieren lächelnd an der Ballettstange in einem hellen Studio.
-  detail:
-    image: ../images/barre-plie-hand-an-der-stange.jpg
-    imageAlt: Teilnehmerinnen im Plié, die Hand an der Stange, einen kleinen Ball zwischen den Knien.
-  caption:
-    - Isabell Grundner
-    - Zertifizierte Barre-Trainerin
+image: ../images/barre-gruppe-stange-tageslicht.jpg
+imageAlt: Eine Gruppe von Frauen streckt an der Ballettstange die Arme aus, im warmen Tageslicht eines Studios.
 ctas:
   - label: Kurse entdecken
     href: /kurse/

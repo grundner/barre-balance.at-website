@@ -32,7 +32,7 @@ Nicht Teil dieses Scopes:
 
 | ID | Seite | Pfad | Inhalt |
 |---|---|---|---|
-| WEB-P1 | Home | `/` | Hero ([Varianten](#hero-der-startseite)), Kursauswahl, Philosophie-Teaser, Stimmen, Blog-Teaser, Anfrage-CTA |
+| WEB-P1 | Home | `/` | [Hero](#hero-der-startseite), Kursauswahl, Philosophie-Teaser, Stimmen, Blog-Teaser, Anfrage-CTA |
 | WEB-P2 | Kurse | `/kurse/` | Übersicht aller veröffentlichten Kurse |
 | WEB-P3 | Kursdetail | `/kurse/<kurs>/` | Beschreibung, Eckdaten, Anfrage-CTA |
 | WEB-P4 | Stundenplan | `/stundenplan/` | **Zurückgestellt**, siehe [Zurückgestellt: Stundenplan](#zurückgestellt-stundenplan) |
@@ -52,33 +52,25 @@ Die konkreten Pfade und Navigationsbeschriftungen sind Inhalt und in
 
 ### Hero der Startseite
 
-Status: **Vorschlag** – Entscheidung zwischen zwei Varianten offen
-([OQ-18](../open-questions.md#design)). Nach der Entscheidung wird die andere
-Variante entfernt.
+Status: **Akzeptiert** (2026-09-29, Entscheidung Stephan Grundner, löst
+[OQ-18](../open-questions.md#entschieden) auf)
 
-Design: Claude Design, `ui_kits/website/Hero Varianten.html`, Varianten 2a und
-2b (2c wird nicht verfolgt).
+Design: Claude Design, `ui_kits/website/Hero Varianten.html`, Variante 2a
+„Vollflächig“. Die Varianten 2b „Editorial“ und 2c „Triptychon“ werden nicht
+verfolgt.
 
-| Variante | Design | Aufbau |
-|---|---|---|
-| Vollflächig | 2a | Vollflächiges Foto im Querformat. Overline, Titel, Akzentlinie, Lead und CTAs stehen hell links unten auf einem dunklen Schutzverlauf, der die Lesbarkeit unabhängig vom Foto sichert. |
-| Editorial | 2b | Sandfarbener Hintergrund. Links Overline, Titel, Lead und CTAs; rechts ein Porträt im Hochformat (3:4) und ein überlappendes Detailbild (1:1). Eine Teal-Linie läuft durch die Bildkomposition, unter dem Porträt steht eine Bildunterschrift. |
-
-- Die aktive Variante ist Inhalt der Startseite. Jeder Build zeigt genau eine
-  Variante; Besucher können nicht umschalten (WEB-Q4).
-- Zum Vergleich sind in der lokalen Entwicklung beide Varianten unter
-  `/ds/hero/<variante>/` abrufbar, unabhängig von der Variante im Inhalt.
-- Beide Varianten verwenden dieselben Texte der Startseite (Overline, Titel,
-  Lead, CTAs). Die Texte im Design sind Platzhalter.
-- Auf Mobilgeräten stapeln sich die Elemente: bei „Vollflächig“ Text unten auf
-  dem Foto, bei „Editorial“ Text über der Bildkomposition.
+- Vollflächiges Foto im Querformat. Overline, Titel, Akzentlinie, Lead und CTAs
+  stehen hell links unten auf einem dunklen Schutzverlauf, der die Lesbarkeit
+  unabhängig vom Foto sichert.
+- Texte und Foto stammen aus dem Inhalt der Startseite. Die Texte im Design
+  sind Platzhalter.
+- Auf Mobilgeräten steht der Text unten auf dem Foto; der Schutzverlauf läuft
+  von unten nach oben.
 - Nicht aus dem Design übernommen:
-  - die Terminleiste in 2a (nächster Kurs, freie Plätze, „Termin buchen“) –
-    Buchung und freie Plätze sind Nicht-Ziele, der Stundenplan ist
-    zurückgestellt;
-  - der Preis- und Konto-Hinweis in 2b – Preise sind offen (OQ-4);
-  - die über dem Foto liegende, transparente Kopfzeile in 2a – die Kopfzeile
-    bleibt auf allen Seiten gleich.
+  - die Terminleiste (nächster Kurs, freie Plätze, „Termin buchen“) – Buchung
+    und freie Plätze sind Nicht-Ziele, der Stundenplan ist zurückgestellt;
+  - die über dem Foto liegende, transparente Kopfzeile – die Kopfzeile bleibt
+    auf allen Seiten gleich.
 
 ---
 
@@ -91,7 +83,7 @@ validiert. Ungültige Inhalte brechen den Build.
 |---|---|---|
 | Website-Einstellungen | Marke, Kontaktkanäle, Navigation, Social-Links, Indexierung | Markenname, E-Mail, Telefon, WhatsApp (optional), Instagram (optional), Navigation, Footer-Links, `indexing` |
 | UI-Texte | Alle wiederkehrenden Oberflächentexte | Button-Labels, Overlines, Leerzustände, Anfrage-Vorlagen |
-| Seite | Redaktioneller Text einer Seite | Titel, Beschreibung (SEO), Overline, Lead, Fließtext, Bild, `placeholder`; Startseite zusätzlich Hero-Variante, weitere Hero-Bilder, Bildunterschrift |
+| Seite | Redaktioneller Text einer Seite | Titel, Beschreibung (SEO), Overline, Lead, Fließtext, Bild, `placeholder` |
 | Kurs | Ein Kursformat (siehe [Glossar](../glossary.md)) | Titel, Kurzbeschreibung, Format, Intensität, Dauer, für wen geeignet, Mitbringen, Reihenfolge, Bild, `placeholder` |
 | Ort | Unterrichtsort | Name, Adresse, Hinweis |
 | Stundenplan-Eintrag | Regelmäßiger wöchentlicher Termin (zurückgestellt, wird gepflegt, aber nicht angezeigt) | Wochentag, Uhrzeit, Dauer, Kurs, Ort, Hinweis |

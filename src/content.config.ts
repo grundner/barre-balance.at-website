@@ -8,7 +8,6 @@
 import { defineCollection, reference, type SchemaContext } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { HERO_VARIANTS } from './lib/hero.ts';
 import { WEEKDAYS } from './lib/schedule.ts';
 
 const placeholder = z.boolean().default(false);
@@ -149,18 +148,6 @@ const pages = defineCollection({
         lead: z.string().optional(),
         ctas: z.array(link).default([]),
         sections: z.record(z.string(), section).default({}),
-        /** Nur Startseite. Das Seitenbild ist das Porträt der Variante „editorial“. */
-        hero: z
-          .object({
-            variant: z.enum(HERO_VARIANTS),
-            /** Querformat-Foto der Variante „vollflaechig“. */
-            wide: z.object(imageFields(image)).refine(hasAltText, altTextError).default({}),
-            /** Detailbild der Variante „editorial“. */
-            detail: z.object(imageFields(image)).refine(hasAltText, altTextError).default({}),
-            /** Bildunterschrift unter dem Porträt der Variante „editorial“. */
-            caption: z.array(z.string().min(1)).default([]),
-          })
-          .optional(),
         placeholder,
         ...imageFields(image),
       })

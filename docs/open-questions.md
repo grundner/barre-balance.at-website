@@ -36,12 +36,6 @@ Eintrag unter „Entschieden“ mit Verweis vermerkt.
 | OQ-16 | Reichweitenmessung: keine, oder cookielose Lösung (z. B. Cloudflare Web Analytics)? | [Website](features/website.md) |
 | OQ-17 | Mehrsprachigkeit: nur Deutsch, oder später auch Englisch (Tourismusregion)? | [Website](features/website.md) |
 
-## Design
-
-| ID | Frage | Betrifft |
-|---|---|---|
-| OQ-18 | Hero der Startseite: Variante „Vollflächig“ (2a) oder „Editorial“ (2b)? | [Website](features/website.md#hero-der-startseite) |
-
 ## Entschieden
 
 | ID | Frage | Entscheidung |
@@ -49,3 +43,4 @@ Eintrag unter „Entschieden“ mit Verweis vermerkt.
 | OQ-1 | Endgültiger Markenname | **Barre & Balance** (2026-09-12), siehe [Markenpositionierung](brand/positioning.md#markenname) |
 | OQ-13 | Verbindlicher Umfang des ersten Releases | Statische Website (2026-09-12), siehe [Roadmap](product/roadmap.md#aktueller-scope) |
 | OQ-14 | Verhältnis Domain `barre-balance.at` zum Markennamen | Domain entspricht dem Markennamen (2026-09-12) |
+| OQ-18 | Hero der Startseite: „Vollflächig“ (2a) oder „Editorial“ (2b)? | Vollflächig (2026-09-29), siehe [Website](features/website.md#hero-der-startseite) |
